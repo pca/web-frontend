@@ -1,7 +1,7 @@
 Philippine Cubers Association
 ===
 <p align="center">
-  <a href="http/dev/pinoycubers.org/" target="blank"><img src="https://raw.githubusercontent.com/pca/web-frontend/master/src/assets/img/pca.png" alt="web-frontend" width="150"/></a>
+  <a href="http/dev/pinoycubers.org/" target="blank"><img src="https://raw.githubusercontent.com/pca/web-frontend/master/src/images/pca.png" alt="web-frontend" width="150"/></a>
 </p>
 
 <p align="center">
