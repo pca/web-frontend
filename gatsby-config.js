@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Pinoy Cubers Associtaion`,
+    title: `Pinoy Cubers Association`,
     description: `The Philippine Cubers Association, also known as the Philippine Cube Association, is the WCA-recognized official national cubing organization of the Philippines.`,
     author: `@geocine`
   },
@@ -10,7 +10,7 @@ module.exports = {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `@pinoycubers/web-frontend`,
-        short_name: `Pinoy Cubers Associtaion`,
+        short_name: `Pinoy Cubers Association`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#4dc0b5`,
