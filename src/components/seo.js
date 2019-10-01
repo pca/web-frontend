@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import Helmet from "react-helmet";
 
+import favicon from '../images/pca.png';
+
 function SEO({ description, lang, meta, keywords, title }) {
   const { site } = useStaticQuery(graphql`
     query DefaultSEOQuery {
@@ -23,6 +25,7 @@ function SEO({ description, lang, meta, keywords, title }) {
       htmlAttributes={{
         lang
       }}
+      link={[{ rel: `icon`, type: `image/png`, href: favicon }]}
       meta={[
         {
           name: `description`,
