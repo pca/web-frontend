@@ -14,7 +14,7 @@ module.exports = {
         start_url: `/`,
         background_color: `#f6e05e`,
         theme_color: `#4dc0b5`,
-        display: `standalone`,
+        display: `fullscreen`,
         icon: `src/images/pca.png`
       }
     },
