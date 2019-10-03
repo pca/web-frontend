@@ -9,12 +9,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `@pinoycubers/web-frontend`,
-        short_name: `Philippine Cubers Association`,
+        name: `Philippine Cubers Association`,
+        short_name: `PCA`,
         start_url: `/`,
-        background_color: `#ffffff`,
+        background_color: `#f6e05e`,
         theme_color: `#4dc0b5`,
-        display: `minimal-ui`,
+        display: `standalone`,
         icon: `src/images/pca.png`
       }
     },
