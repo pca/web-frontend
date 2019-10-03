@@ -12,9 +12,9 @@ module.exports = {
         name: `Philippine Cubers Association`,
         short_name: `PCA`,
         start_url: `/`,
-        background_color: `#f6e05e`,
-        theme_color: `#4dc0b5`,
-        display: `fullscreen`,
+        background_color: `#ffffff`,
+        theme_color: `#f6e05e`,
+        display: `standalone`,
         icon: `src/images/pca.png`
       }
     },

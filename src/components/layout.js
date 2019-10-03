@@ -18,7 +18,7 @@ function Layout({ children }) {
             Created by{` `}
             <a
               className="font-bold no-underline text-white"
-              href="https://bryant.io"
+              href="https://github.com/pca"
             >
               PCA
             </a>
