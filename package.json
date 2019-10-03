@@ -1,6 +1,6 @@
 {
   "name": "@pinoycubers/web-fronted",
-  "description": "Pinoy Cubers Association",
+  "description": "Philippine Cubers Association",
   "version": "0.0.1",
   "author": "Aivan Monceller <aivan@monceller.com>",
   "dependencies": {
