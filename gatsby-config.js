@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Philippine Cubers Association`,
+    short_title: `PCA`,
     description: `The Philippine Cubers Association, also known as the Philippine Cube Association, is the WCA-recognized official national cubing organization of the Philippines.`,
     author: `@geocine`
   },
