@@ -52,12 +52,20 @@ function Header() {
         >
           {[
             {
-              route: `/`,
-              title: `Home`
-            },
-            {
               route: `/about`,
               title: `About`
+            },
+            {
+              route: `/community`,
+              title: `Community`
+            },
+            {
+              route: `/events`,
+              title: `Events`
+            },
+            {
+              route: `/resources`,
+              title: `Resources`
             },
             {
               route: `/contact`,

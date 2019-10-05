@@ -3,12 +3,12 @@ import React from "react";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
 
-function AboutPage() {
+function CommunityPage() {
   return (
     <Layout>
       <SEO
         keywords={[`cubing`, `pca`, `pinoy cubers`, `speedcubing`, `rubik's cube`]}
-        title="About"
+        title="Community"
       />
 
       <section className="text-center">
@@ -20,4 +20,4 @@ function AboutPage() {
   );
 }
 
-export default AboutPage;
+export default CommunityPage;
