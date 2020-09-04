@@ -11,7 +11,7 @@
     "gatsby-plugin-react-helmet": "3.1.10",
     "gatsby-plugin-sass": "2.1.17",
     "graphql": "14.5.8",
-    "node-sass": "4.12.0",
+    "node-sass": "4.13.1",
     "prop-types": "15.7.2",
     "react": "16.10.1",
     "react-dom": "16.10.1",
