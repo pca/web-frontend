@@ -2,8 +2,6 @@ import React, { useState, useEffect  } from "react"
 
 import axios from 'axios'
 
-import EventIcon from "./EventIcon"
-
 import ListOfEventsFile from '../../list-of-events.js'
 
 import './RankingNav.scss'

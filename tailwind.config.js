@@ -15,6 +15,7 @@ module.exports = {
       fontFamily: {
         effra: "Effra, sans-serif",
         effraMd: "Effra Medium, sans-serif",
+        rubik: "Rubik, sans-serif",
       },
       borderWidth: {
         bar: "40px",
