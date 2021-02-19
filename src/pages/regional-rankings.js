@@ -16,8 +16,20 @@ const RegionalRankings = () => {
   const [selectedRegion, setSelectedRegion] = useState(); 
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingRegions, setIsLoadingRegions] = useState(true);
   const [rankings, setRankings] = useState(null);
+  const [regions, setRegions] = useState(null);
 
+
+
+  useEffect(() => {
+    axios.get(`https://cors-anywhere.herokuapp.com/https://pinoycubers.org/api/regions`)
+      .then(res => {
+        const regions = res.data;
+        setRegions(regions);
+        setIsLoadingRegions(false);
+      })
+  }, []);
 
   useEffect(() => {
     axios.get(`https://cors-anywhere.herokuapp.com/https://pinoycubers.org/api/rankings/national-${selectedFormat}/${selectedEvent}`)
@@ -26,7 +38,8 @@ const RegionalRankings = () => {
         setRankings(rankings);
         setIsLoading(false);
       })
-  }, [selectedEvent]);
+  }, [selectedEvent, selectedFormat, selectedRegion]);
+
 
 
   const eventChange = event => {
@@ -34,13 +47,35 @@ const RegionalRankings = () => {
     setIsLoading(true);
     console.log("new selected event: " + event);
   };
+
+  const formatChange = format => {
+    setSelectedFormat(format);
+    setIsLoading(true);
+    console.log("new selected format: " + format);
+  };
+
+  const regionChange = region => {
+    setSelectedRegion(region);
+    setIsLoadingRegions(true);
+    console.log("new selected region: " + region);
+  };
   
   return (
     <div>
       <Layout>
 
-        <RankingNav eventChange={eventChange} setSelectedEvent={setSelectedEvent} />
-        <RankingList isLoading={isLoading} rankings={rankings} />
+        <RankingNav 
+          eventChange={eventChange}
+          formatChange={formatChange}
+          regionChange={regionChange}
+          setSelectedEvent={setSelectedEvent} 
+          regions={regions} 
+        />
+        <RankingList 
+          isLoading={isLoading} 
+          isLoadingRegions={isLoadingRegions} 
+          rankings={rankings} 
+        />
 
       </Layout>
     </div>

@@ -39,6 +39,7 @@ const RankingList = props => {
                 )
               })} 
             </tbody>
+            
           </table>
 
 

@@ -24,7 +24,7 @@ const RankingNav = props => {
 
     let content = <p>Loading events...</p>;
 
-    if (!props.isLoading) {
+    if (!props.isLoading && !props.isLoadingRegions) {
       content = (
         <div>
 
@@ -42,6 +42,21 @@ const RankingNav = props => {
           </div>
 
 
+
+          <div className="inline-flex" role="group" aria-label="Button group">
+            <button 
+              className="h-10 px-5 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-l-lg focus:shadow-outline hover:bg-indigo-800 focus:bg-indigo-800"
+              onClick={()=>{props.formatChange("single")}}
+            >
+              Single
+            </button>
+            <button 
+              className="h-10 px-5 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-r-lg focus:shadow-outline hover:bg-indigo-800 focus:bg-indigo-800"
+              onClick={()=>{props.formatChange("average")}}
+            >
+              Average
+            </button>
+          </div>
 
 
 
