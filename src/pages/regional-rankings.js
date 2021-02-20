@@ -13,13 +13,12 @@ const RegionalRankings = () => {
 
   const [selectedEvent, setSelectedEvent] = useState("333");
   const [selectedFormat, setSelectedFormat] = useState("single");
-  const [selectedRegion, setSelectedRegion] = useState(); 
+  const [selectedRegion, setSelectedRegion] = useState(['national', '/']); 
 
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingRegions, setIsLoadingRegions] = useState(true);
+  const [isRegionsLoading, setIsRegionsLoading] = useState(true);
   const [rankings, setRankings] = useState(null);
   const [regions, setRegions] = useState(null);
-
 
 
   useEffect(() => {
@@ -27,19 +26,19 @@ const RegionalRankings = () => {
       .then(res => {
         const regions = res.data;
         setRegions(regions);
-        setIsLoadingRegions(false);
+        setIsRegionsLoading(false);
       })
   }, []);
 
   useEffect(() => {
-    axios.get(`https://cors-anywhere.herokuapp.com/https://pinoycubers.org/api/rankings/national-${selectedFormat}/${selectedEvent}`)
+    console.log(`https://cors-anywhere.herokuapp.com/https://pinoycubers.org/api/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
+    axios.get(`https://cors-anywhere.herokuapp.com/https://pinoycubers.org/api/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
       .then(res => {
         const rankings = res.data;
         setRankings(rankings);
         setIsLoading(false);
       })
   }, [selectedEvent, selectedFormat, selectedRegion]);
-
 
 
   const eventChange = event => {
@@ -54,10 +53,17 @@ const RegionalRankings = () => {
     console.log("new selected format: " + format);
   };
 
-  const regionChange = region => {
-    setSelectedRegion(region);
-    setIsLoadingRegions(true);
-    console.log("new selected region: " + region);
+  const regionChange = event => {
+    console.log("event.target.value region: " + event.target.value);
+    if (event.target.value == "PH") {
+      var formattedRegion = "/"
+      var nationalOrRegional = "national"
+    } else {
+      var formattedRegion = "/" + event.target.value + "/"
+      var nationalOrRegional = "regional"
+    }
+    setSelectedRegion([nationalOrRegional, formattedRegion]);
+    console.log("[nationalOrRegional, formattedRegion]: " + [nationalOrRegional, formattedRegion]);
   };
   
   return (
@@ -65,15 +71,17 @@ const RegionalRankings = () => {
       <Layout>
 
         <RankingNav 
+          isRegionsLoading={isRegionsLoading} 
           eventChange={eventChange}
           formatChange={formatChange}
           regionChange={regionChange}
           setSelectedEvent={setSelectedEvent} 
+          selectedRegion={selectedRegion}
           regions={regions} 
         />
         <RankingList 
           isLoading={isLoading} 
-          isLoadingRegions={isLoadingRegions} 
+          isRegionsLoading={isRegionsLoading} 
           rankings={rankings} 
         />
 

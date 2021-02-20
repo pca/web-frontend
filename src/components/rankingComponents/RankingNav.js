@@ -10,23 +10,12 @@ import './RankingNav.scss'
 const RankingNav = props => {
 
   const [listOfEvents, setListOfEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
+    let content = <p>Loading menu...</p>;
 
-  // useEffect(() => {
-  //   axios.get(`https://cors-anywhere.herokuapp.com/https://pinoycubers.org/api/events/`)
-  //     .then(res => {
-  //       const listOfEvents = res.data;
-  //       setListOfEvents(listOfEvents);
-  //       setIsLoading(false);
-  //     })
-  // }, []);
-
-    let content = <p>Loading events...</p>;
-
-    if (!props.isLoading && !props.isLoadingRegions) {
+    if (!props.isRegionsLoading) {
       content = (
-        <div>
+        <div className="rankings-nav">
 
 
           <div className="events-menu">
@@ -42,22 +31,50 @@ const RankingNav = props => {
           </div>
 
 
+          <div className="region-menu max-w-xs rounded-md shadow-sm">
+            <select 
+              className="block form-select w-full rounded-md transition border border-gray-300 px-3 py-2 bg-white duration-150 ease-in-out sm:text-sm sm:leading-5"
+              onChange={props.regionChange}
+            >
 
-          <div className="inline-flex" role="group" aria-label="Button group">
+              <option selected
+                key="PH"
+                value="PH"
+              >
+                Philippines
+              </option>
+
+              {props.regions.map(region => {
+                return (
+
+                  <option
+                    key={region.id}
+                    value={region.id}
+                  >
+                    {region.name}
+                  </option>
+
+                )
+              })} 
+
+            </select>
+          </div>
+
+
+          <div className="format-menu inline-flex" role="group" aria-label="Button group">
             <button 
-              className="h-10 px-5 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-l-lg focus:shadow-outline hover:bg-indigo-800 focus:bg-indigo-800"
+              className="h-10 px-5 text-indigo-100 transition-colors duration-300 bg-indigo-700 rounded-l-md focus:shadow-outline hover:bg-indigo-800 focus:bg-indigo-800"
               onClick={()=>{props.formatChange("single")}}
             >
               Single
             </button>
             <button 
-              className="h-10 px-5 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-r-lg focus:shadow-outline hover:bg-indigo-800 focus:bg-indigo-800"
+              className="h-10 px-5 text-indigo-100 transition-colors duration-300 bg-indigo-700 rounded-r-md focus:shadow-outline hover:bg-indigo-800 focus:bg-indigo-800"
               onClick={()=>{props.formatChange("average")}}
             >
               Average
             </button>
           </div>
-
 
 
         </div>
