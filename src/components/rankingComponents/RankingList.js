@@ -1,49 +1,46 @@
-import React, { useState } from 'react'
+import React from "react"
 
 const RankingList = props => {
 
-  // const [isLoading, fetchedData] = useHttp('/api/rankings/national-average/333/', []);
-  // console.log(JSON.stringify(fetchedData));
+  let content = <p>Loading results...</p>;
 
-    let content = <p>Loading results...</p>;
-
-    if (!props.isLoading) {
-      content = (
-        <div>
+  if (!props.isLoading) {
+    content = (
+      <div>
 
 
-          <table className="rankings font-rubik text-sm">
+        <table className="rankings font-rubik text-sm">
 
-            <thead className="font-bold text-left">
-              <tr>
-                <th className="pos px-3 py-1">#</th>
-                <th className="name px-3 py-1">Name</th>
-                <th className="result px-3 py-1">Result</th>
-                <th className="competition px-3 py-1">Competition</th>
-                <th></th>
-              </tr>
-            </thead>
+          <thead className="font-bold text-left">
+            <tr>
+              <th className="pos px-3 py-1">#</th>
+              <th className="name px-3 py-1">Name</th>
+              <th className="result px-3 py-1">Result</th>
+              <th className="competition px-3 py-1">Competition</th>
+              <th></th>
+            </tr>
+          </thead>
 
-            <tbody>
-              {props.rankings.map((cuber, i) => {
-                return (
-                  <tr key={cuber.wca_id}>
-                    <td className="pos px-3 py-1">{i + 1}</td>
-                    <td className="name px-3 py-1">{cuber.person_name}</td>
-                    <td className="result px-3 py-1"> {cuber.value}</td>
-                    <td className="competition px-3 py-1">{cuber.competition.name}</td>
-                    <td></td>
-                  </tr>
-                )
-              })} 
-            </tbody>
+          <tbody>
+            {props.rankings.map((cuber, i) => {
+              return (
+                <tr key={cuber.wca_id}>
+                  <td className="pos px-3 py-1">{i + 1}</td>
+                  <td className="name px-3 py-1">{cuber.person_name}</td>
+                  <td className="result px-3 py-1"> {cuber.value}</td>
+                  <td className="competition px-3 py-1">{cuber.competition.name}</td>
+                  <td></td>
+                </tr>
+              )
+            })} 
+          </tbody>
 
-          </table>
+        </table>
 
 
-        </div>
-      )
-    }
+      </div>
+    )
+  }
 
   return content;
 }
