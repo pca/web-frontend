@@ -4,12 +4,16 @@ import axios from 'axios'
 
 import Layout from "../components/layout"
 
+import LoginPrompt from "../components/rankingComponents/LoginPrompt"
 import RankingNav from "../components/rankingComponents/RankingNav"
 import RankingList from "../components/rankingComponents/RankingList"
 
 import "@fontsource/rubik"
 
 const RegionalRankings = () => {
+
+
+  const [isLoggedIn, setisLoggedIn] = useState(false);
 
   const [selectedEvent, setSelectedEvent] = useState("333");
   const [selectedFormat, setSelectedFormat] = useState("single");
@@ -70,6 +74,9 @@ const RegionalRankings = () => {
     <div>
       <Layout>
 
+        <LoginPrompt 
+          isLoggedIn={isLoggedIn}
+        />
         <RankingNav 
           isRegionsLoading={isRegionsLoading} 
           eventChange={eventChange}
