@@ -1,4 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
+
+import { useLocation } from '@reach/router';
+import queryString from 'query-string';
 
 // import './LoginPrompt.scss'
 
@@ -6,6 +9,24 @@ import React from "react"
 const LoginPrompt = props => {
 
   // const [listOfEvents, setListOfEvents] = useState([]);
+
+    const getWcaCode = (query) => {
+      if (query) {
+        const queriedParams = queryString.parse(query);
+        console.log("queriedParams:" + JSON.stringify(queriedParams));
+
+        return queriedParams;
+      }
+    };
+
+    const location = useLocation();
+    const code = (location.search && getWcaCode(location.search)) || 'light';
+    const [wcaCode, setWcaCode] = React.useState(code);
+
+    console.log("location:" + JSON.stringify(location));
+    console.log("code:" + JSON.stringify(code));
+    console.log("wcaCode:" + JSON.stringify(wcaCode));
+    console.log("Object.values(wcaCode) :" + JSON.stringify(Object.values(wcaCode)));
 
     let content = "";
 
