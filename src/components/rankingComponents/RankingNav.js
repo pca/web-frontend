@@ -1,7 +1,5 @@
 import React from "react"
 
-import axios from "axios"
-
 import ListOfEventsFile from "../../list-of-events.js"
 
 import "./RankingNav.scss"
@@ -30,13 +28,15 @@ const RankingNav = props => {
 
 
           <div id="region-menu" className="region-menu mb-3 max-w-xs rounded-md shadow-sm">
-            <label for="region-menu">Region</label>
+          
+            <label htmlFor="region-menu">Region</label>
+
             <select 
               className="block form-select w-full rounded-md transition border border-gray-300 px-3 py-2 bg-white duration-150 ease-in-out sm:text-sm sm:leading-5"
               onChange={props.regionChange}
             >
 
-              <option selected
+              <option
                 key="PH"
                 value="PH"
               >
