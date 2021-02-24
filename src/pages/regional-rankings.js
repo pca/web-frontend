@@ -13,7 +13,6 @@ import "@fontsource/rubik"
 const RegionalRankings = () => {
 
 
-  const [isLoggedIn, setisLoggedIn] = useState(false);
 
   const [selectedEvent, setSelectedEvent] = useState("333");
   const [selectedFormat, setSelectedFormat] = useState("single");
@@ -26,7 +25,7 @@ const RegionalRankings = () => {
 
 
   useEffect(() => {
-    axios.get(`https://cors-anywhere.herokuapp.com/https://pinoycubers.org/api/regions`)
+    axios.get(`https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/regions`)
       .then(res => {
         const regions = res.data;
         setRegions(regions);
@@ -34,9 +33,10 @@ const RegionalRankings = () => {
       })
   }, []);
 
+  //reload the rankings everytime a category changes
   useEffect(() => {
-    console.log(`https://cors-anywhere.herokuapp.com/https://pinoycubers.org/api/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
-    axios.get(`https://cors-anywhere.herokuapp.com/https://pinoycubers.org/api/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
+    // console.log(`https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
+    axios.get(`https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
       .then(res => {
         const rankings = res.data;
         setRankings(rankings);
@@ -59,12 +59,14 @@ const RegionalRankings = () => {
 
   const regionChange = event => {
     console.log("event.target.value region: " + event.target.value);
-    if (event.target.value == "PH") {
-      var formattedRegion = "/"
-      var nationalOrRegional = "national"
+    var formattedRegion = ""
+    var nationalOrRegional = ""
+    if (event.target.value === "PH") {
+      formattedRegion = "/"
+      nationalOrRegional = "national"
     } else {
-      var formattedRegion = "/" + event.target.value + "/"
-      var nationalOrRegional = "regional"
+      formattedRegion = "/" + event.target.value + "/"
+      nationalOrRegional = "regional"
     }
     setSelectedRegion([nationalOrRegional, formattedRegion]);
     console.log("[nationalOrRegional, formattedRegion]: " + [nationalOrRegional, formattedRegion]);
@@ -74,9 +76,8 @@ const RegionalRankings = () => {
     <div>
       <Layout>
 
-        <LoginPrompt 
-          isLoggedIn={isLoggedIn}
-        />
+        <LoginPrompt />
+        
         <RankingNav 
           isRegionsLoading={isRegionsLoading} 
           eventChange={eventChange}
