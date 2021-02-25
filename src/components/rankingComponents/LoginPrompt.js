@@ -5,10 +5,21 @@ import axios from "axios"
 import { useLocation } from "@reach/router";
 import queryString from "query-string";
 
+import RegionSelect from "./RegionSelect"
+
 // import "./LoginPrompt.scss"
 
 
 const LoginPrompt = props => {
+
+    const userRegionChange = event => {
+
+    };
+
+    const submitRegion = event => {
+
+    };
+
 
     const getWcaCode = (query) => {
       if (query) {
@@ -28,10 +39,11 @@ const LoginPrompt = props => {
 
     useEffect(() => {
       
-      //retrieve PcaApiKey once, to check if user already has it
+      //try retrieving PcaApiKey once, to check if user already has it
       setPcaApiKey(localStorage.getItem("localPcaApiKey"))
 
       console.log("has localPcaApiKey? : " + (localStorage.getItem("localPcaApiKey") ? localStorage.getItem("localPcaApiKey") : "no"));
+
       if (localStorage.getItem("localPcaApiKey") == null) {
 
         console.log("no localPcaApiKey - requesting from pinoycubers.org API login POST...")
@@ -52,9 +64,6 @@ const LoginPrompt = props => {
           })
       }
 
-      console.log("localPcaApiKey: " + localStorage.getItem("localPcaApiKey"));
-
-
     }, []);
 
     let content = "";
@@ -63,20 +72,26 @@ const LoginPrompt = props => {
       content = (
         <div className="login-prompt bg-yellow-100 mx-4 my-5 px-4 py-5 border border-yellow-200 sm:px-6">
           <div className="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-no-wrap">
-
             <div className="ml-4 mt-4">
+
               <h3 className="text-lg leading-6 font-medium text-gray-800">
                 Hello, User!
               </h3>
               <p className="mt-1 text-sm leading-5 text-gray-500">
                 Please keep in mind: 
-                Pick only your REAL region. Our team will verify this, and may reject your submission if found false.
-                You can only set your region once every year. 
-              </p>
+                Pick only your REAL region. Our team will verify this, and will reject your submission if found false. 
+              </p> 
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                (If you think your region setting has been rejected incorrectly, contact your Philippine WCA Delegate and be prepared to provide proof of residence or origin in your region.)
+              </p> 
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                You can only set your region once every year.
+              </p>  
+              <RegionSelect 
+                regionChange={userRegionChange}
+              />
+
             </div>
-
-
-
           </div>
         </div>
       )

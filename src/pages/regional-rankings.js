@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-import axios from 'axios'
+import axios from "axios"
 
 import Layout from "../components/layout"
 
@@ -12,8 +12,6 @@ import "@fontsource/rubik"
 
 const RegionalRankings = () => {
 
-
-
   const [selectedEvent, setSelectedEvent] = useState("333");
   const [selectedFormat, setSelectedFormat] = useState("single");
   const [selectedRegion, setSelectedRegion] = useState(['national', '/']); 
@@ -23,15 +21,6 @@ const RegionalRankings = () => {
   const [rankings, setRankings] = useState(null);
   const [regions, setRegions] = useState(null);
 
-
-  useEffect(() => {
-    axios.get(`https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/regions`)
-      .then(res => {
-        const regions = res.data;
-        setRegions(regions);
-        setIsRegionsLoading(false);
-      })
-  }, []);
 
   //reload the rankings everytime a category changes
   useEffect(() => {
@@ -77,7 +66,7 @@ const RegionalRankings = () => {
       <Layout>
 
         <LoginPrompt />
-        
+
         <RankingNav 
           isRegionsLoading={isRegionsLoading} 
           eventChange={eventChange}
@@ -85,11 +74,10 @@ const RegionalRankings = () => {
           regionChange={regionChange}
           setSelectedEvent={setSelectedEvent} 
           selectedRegion={selectedRegion}
-          regions={regions} 
+          setSelectedRegion={setSelectedRegion}
         />
         <RankingList 
           isLoading={isLoading} 
-          isRegionsLoading={isRegionsLoading} 
           rankings={rankings} 
         />
 
