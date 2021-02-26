@@ -12,15 +12,43 @@ import RegionSelect from "./RegionSelect"
 
 const LoginPrompt = props => {
 
-    const userRegionChange = event => {
+    const [submitted, setSubmitted] = useState(false);
+    const [submitError, setSubmitError] = useState(false);
 
+    const [currentUser, setCurrentUser] = useState(null);
+    const [userRegion, setUserRegion] = useState("NCR");
+
+    const userRegionChange = event => {
+      setUserRegion(event.target.value);
     };
 
     const submitRegion = event => {
 
+      console.log("submitting user region...");
+      const options = {
+        headers: {
+          "Authorization": `Token ${localStorage.getItem("localPcaApiKey")}`
+        }
+      };
+
+      axios.put("https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/user/region/", { region: userRegion }, options)
+      .then((response) => {
+        setSubmitted(true);
+      }, (error) => {
+        setSubmitError(true);
+        console.log("error happened");
+        console.log(error);
+      });
+
     };
 
+    //TODO: "thanks for submitting, wait to be approved" message
 
+    //TODO: hide region form if already set for the year
+
+    //TODO: check if user already has region, and inform if they can/can't change(?)
+
+    //THIS BLOCK has to do with WCA code & PCA login key retrieval 
     const getWcaCode = (query) => {
       if (query) {
         const queriedParams = queryString.parse(query);
@@ -66,36 +94,141 @@ const LoginPrompt = props => {
 
     }, []);
 
+
+    // once user has login key - get the user's details
+    useEffect(() => {
+
+      if (localStorage.getItem("localPcaApiKey")) {
+
+        console.log("localPcaApiKey is NOT null: getting user info...");
+        const options = {
+          headers: {
+            "Authorization": `Token ${localStorage.getItem("localPcaApiKey")}`
+          }
+        };
+
+        axios.get("https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/user/", options)
+        .then((response) => {
+            setCurrentUser(response);
+            console.log("currentUser: " + currentUser);
+        }, (error) => {
+          console.log(error);
+        });
+
+          // axios({
+          //     method: 'GET',
+          //     url: 'https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/user/',
+          //     headers: {
+          //       "Authorization": `Token ${localStorage.getItem("localPcaApiKey")}`
+          //     },
+          // }).then(function (response) {
+          //     setCurrentUser(response);
+          //     console.log(currentUser);
+          // }).catch(function (error) {
+          //     console.log(error);
+          // });
+
+
+      }
+
+    }, [pcaApiKey]);
+    
+
+    const userInfo = currentUser 
+      ? <React.Fragment>
+          <h3 className="text-lg leading-6 font-medium text-gray-800">
+            Hello, {currentUser.data.first_name ? `${currentUser.data.first_name} ` : null}
+            {currentUser.data.last_name ? currentUser.data.last_name : null} 
+            ({currentUser.data.wca_id ? currentUser.data.wca_id : null})!
+            <span className="underline text-sm ml-2">Log out</span>
+          </h3>
+          <p className="mt-1 mb-3 font-bold text-sm leading-5 text-gray-500">
+            Your current region: {currentUser.data.region ? currentUser.data.region : "not yet set"}
+          </p>
+        </React.Fragment> 
+      : ' ';
+
     let content = "";
 
-    if (pcaApiKey != null) {
+    if (pcaApiKey != null && !submitted) {
+
+      content = (
+        <div className="login-prompt bg-yellow-100 mx-4 my-5 px-4 py-5 border border-yellow-200 sm:px-6">
+          <div className="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-no-wrap">
+            <div className="ml-4 mt-4">
+
+              {userInfo}
+
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                Please keep in mind: 
+                Pick only your REAL region. Our team will verify this, and will reject your submission if found false. 
+              </p> 
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                (If you think your region setting has been rejected incorrectly, contact the nearest active Philippine WCA Delegate to you, and provide proof of residence or origin in your region.)
+              </p> 
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                You can only set your region once every year, so please check if it's correct before submitting.
+              </p>  
+
+              <div className="mt-3 flex justify-start content-end flex-wrap sm:flex-no-wrap">
+                <RegionSelect 
+                  regionChange={userRegionChange}
+                  placeholder="Select region"
+                />
+                {console.log("userRegion: " + userRegion)}
+                <button 
+                  className="h-10 mb-3 px-3 text-blue-100 transition-colors duration-300 bg-blue-700 rounded-md focus:shadow-outline hover:bg-blue-800 focus:bg-blue-800"
+                  onClick={()=>{submitRegion()}}
+                >
+                  Set your region
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )
+
+    } else if (submitted) {
+
       content = (
         <div className="login-prompt bg-yellow-100 mx-4 my-5 px-4 py-5 border border-yellow-200 sm:px-6">
           <div className="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-no-wrap">
             <div className="ml-4 mt-4">
 
               <h3 className="text-lg leading-6 font-medium text-gray-800">
-                Hello, User!
+                You've submitted your region
               </h3>
-              <p className="mt-1 text-sm leading-5 text-gray-500">
-                Please keep in mind: 
-                Pick only your REAL region. Our team will verify this, and will reject your submission if found false. 
-              </p> 
-              <p className="mt-1 text-sm leading-5 text-gray-500">
-                (If you think your region setting has been rejected incorrectly, contact your Philippine WCA Delegate and be prepared to provide proof of residence or origin in your region.)
-              </p> 
-              <p className="mt-1 text-sm leading-5 text-gray-500">
-                You can only set your region once every year.
-              </p>  
-              <RegionSelect 
-                regionChange={userRegionChange}
-              />
 
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                Thanks for submitting your region! Please wait for your region setting to be approved.
+              </p> 
             </div>
           </div>
         </div>
       )
+
+    } else if (submitError && !submitted) {
+
+      content = (
+        <div className="login-prompt bg-yellow-100 mx-4 my-5 px-4 py-5 border border-yellow-200 sm:px-6">
+          <div className="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-no-wrap">
+            <div className="ml-4 mt-4">
+
+              <h3 className="text-lg leading-6 font-medium text-gray-800">
+                You've already submitted your region this year
+              </h3>
+
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                You can only set your region once every year.
+              </p> 
+            </div>
+          </div>
+        </div>
+      )
+
     } else {
+
       content = (
         <div className="login-prompt bg-yellow-100 mx-4 my-5 px-4 py-5 border border-yellow-200 sm:px-6">
           <div className="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-no-wrap">

@@ -25,7 +25,7 @@ const RegionSelect = props => {
 
     if (!isRegionsLoading) {
       content = (
-        <div id="region-menu" className="region-menu mb-3 max-w-xs rounded-md shadow-sm">
+        <div id="region-menu" className="mb-3 max-w-xs rounded-md">
         
           <label htmlFor="region-menu">Region</label>
 
