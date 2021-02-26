@@ -15,6 +15,7 @@ const RegionalRankings = () => {
   const [selectedEvent, setSelectedEvent] = useState("333");
   const [selectedFormat, setSelectedFormat] = useState("single");
   const [selectedRegion, setSelectedRegion] = useState(['national', '/']); 
+  const [hideLoginPrompt, setHideLoginPrompt] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isRegionsLoading, setIsRegionsLoading] = useState(true);
@@ -37,19 +38,21 @@ const RegionalRankings = () => {
   const eventChange = event => {
     setSelectedEvent(event);
     setIsLoading(true);
+    setHideLoginPrompt(true);
     console.log("new selected event: " + event);
   };
 
   const formatChange = format => {
     setSelectedFormat(format);
     setIsLoading(true);
+    setHideLoginPrompt(true);
     console.log("new selected format: " + format);
   };
 
   const regionChange = event => {
     console.log("event.target.value region: " + event.target.value);
-    const formattedRegion = ""
-    const nationalOrRegional = ""
+    var formattedRegion = "/"
+    var nationalOrRegional = "national"
     if (event.target.value === "PH") {
       formattedRegion = "/"
       nationalOrRegional = "national"
@@ -58,14 +61,19 @@ const RegionalRankings = () => {
       nationalOrRegional = "regional"
     }
     setSelectedRegion([nationalOrRegional, formattedRegion]);
+    setIsLoading(true);
+    setHideLoginPrompt(true);
     console.log("[nationalOrRegional, formattedRegion]: " + [nationalOrRegional, formattedRegion]);
   };
-  
+
   return (
     <div>
       <Layout>
 
-        <LoginPrompt />
+        <LoginPrompt 
+          hideLoginPrompt={hideLoginPrompt}
+          setHideLoginPrompt={setHideLoginPrompt} 
+        />
         <RankingNav 
           isRegionsLoading={isRegionsLoading} 
           eventChange={eventChange}
