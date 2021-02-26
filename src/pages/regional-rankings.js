@@ -48,8 +48,8 @@ const RegionalRankings = () => {
 
   const regionChange = event => {
     console.log("event.target.value region: " + event.target.value);
-    var formattedRegion = ""
-    var nationalOrRegional = ""
+    const formattedRegion = ""
+    const nationalOrRegional = ""
     if (event.target.value === "PH") {
       formattedRegion = "/"
       nationalOrRegional = "national"
@@ -66,7 +66,6 @@ const RegionalRankings = () => {
       <Layout>
 
         <LoginPrompt />
-
         <RankingNav 
           isRegionsLoading={isRegionsLoading} 
           eventChange={eventChange}

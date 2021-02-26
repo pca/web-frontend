@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react"
 
 import axios from "axios"
 
-import { useLocation } from "@reach/router";
-import queryString from "query-string";
+import { useLocation } from "@reach/router"
+import queryString from "query-string"
+
+import getYear from "date-fns/getYear"
+import parseJSON from "date-fns/parseJSON"
 
 import RegionSelect from "./RegionSelect"
 
@@ -17,6 +20,7 @@ const LoginPrompt = props => {
 
     const [currentUser, setCurrentUser] = useState(null);
     const [userRegion, setUserRegion] = useState("NCR");
+    const [canUserChangeRegion, setCanUserChangeRegion] = useState(false);
 
     const userRegionChange = event => {
       setUserRegion(event.target.value);
@@ -39,6 +43,28 @@ const LoginPrompt = props => {
         console.log("error happened");
         console.log(error);
       });
+
+    };
+
+    const checkIfCanChangeRegion = user => {
+
+      let canChange = false;
+      const dateChanged = user.data.region_updated_at ? user.data.region_updated_at : user.data.created_at;
+      console.log("user.data.region_updated_at: " + user.data.region_updated_at);
+      console.log("user.data.created_at: " + user.data.created_at);
+      const yearToday = getYear(new Date());
+      console.log("dateChanged: " + dateChanged);
+      console.log("yearToday: " + yearToday);
+      console.log("getYear(new Date()): " + getYear(new Date()));
+      console.log("getYear(dateChanged): " + getYear(dateChanged));
+      console.log("parseJSON(dateChanged): " + parseJSON(dateChanged));
+      if (getYear(parseJSON(dateChanged)) !== yearToday) {
+        canChange = true;
+      } else {        
+        console.log("year today is the same year as year changed");
+      }
+
+      setCanUserChangeRegion(canChange);
 
     };
 
@@ -101,6 +127,7 @@ const LoginPrompt = props => {
       if (localStorage.getItem("localPcaApiKey")) {
 
         console.log("localPcaApiKey is NOT null: getting user info...");
+
         const options = {
           headers: {
             "Authorization": `Token ${localStorage.getItem("localPcaApiKey")}`
@@ -110,29 +137,16 @@ const LoginPrompt = props => {
         axios.get("https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/user/", options)
         .then((response) => {
             setCurrentUser(response);
-            console.log("currentUser: " + currentUser);
+            checkIfCanChangeRegion(response);
+            console.log("currentUser: " + JSON.stringify(currentUser));
         }, (error) => {
           console.log(error);
         });
 
-          // axios({
-          //     method: 'GET',
-          //     url: 'https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/user/',
-          //     headers: {
-          //       "Authorization": `Token ${localStorage.getItem("localPcaApiKey")}`
-          //     },
-          // }).then(function (response) {
-          //     setCurrentUser(response);
-          //     console.log(currentUser);
-          // }).catch(function (error) {
-          //     console.log(error);
-          // });
-
-
       }
 
     }, [pcaApiKey]);
-    
+
 
     const userInfo = currentUser 
       ? <React.Fragment>
@@ -147,6 +161,22 @@ const LoginPrompt = props => {
           </p>
         </React.Fragment> 
       : ' ';
+
+
+    const userRegionControls = canUserChangeRegion
+      ? <div className="mt-3 flex justify-start content-end flex-wrap sm:flex-no-wrap">
+          <RegionSelect 
+            regionChange={userRegionChange}
+            placeholder="Select region"
+          />
+          <button 
+            className="h-10 mb-3 px-3 text-blue-100 transition-colors duration-300 bg-blue-700 rounded-md focus:shadow-outline hover:bg-blue-800 focus:bg-blue-800"
+            onClick={()=>{submitRegion()}}
+          >
+            Set your region
+          </button>
+        </div>
+      : <div className="mt-3 flex justify-start content-end flex-wrap sm:flex-no-wrap">You've already set your region for this year. Wait until next year to be able to set it again.</div>;
 
     let content = "";
 
@@ -170,19 +200,7 @@ const LoginPrompt = props => {
                 You can only set your region once every year, so please check if it's correct before submitting.
               </p>  
 
-              <div className="mt-3 flex justify-start content-end flex-wrap sm:flex-no-wrap">
-                <RegionSelect 
-                  regionChange={userRegionChange}
-                  placeholder="Select region"
-                />
-                {console.log("userRegion: " + userRegion)}
-                <button 
-                  className="h-10 mb-3 px-3 text-blue-100 transition-colors duration-300 bg-blue-700 rounded-md focus:shadow-outline hover:bg-blue-800 focus:bg-blue-800"
-                  onClick={()=>{submitRegion()}}
-                >
-                  Set your region
-                </button>
-              </div>
+              {userRegionControls}
 
             </div>
           </div>
