@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 
 import axios from "axios"
 
+import LoadingSpinner from "../uiComponents/LoadingSpinner"
+
 // import "./RegionSelect.scss"
 
 
@@ -21,7 +23,9 @@ const RegionSelect = props => {
 
     const PhOption = props.isRankingNav ? <option key="PH" value="PH">Philippines</option> : ' ';
 
-    let content = <p>Loading regions...</p>;
+    let content = <div className="flex flex-row">
+                    <LoadingSpinner /> Loading regions...
+                  </div>;
 
     if (!isRegionsLoading) {
       content = (

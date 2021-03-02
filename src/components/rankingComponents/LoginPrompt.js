@@ -9,12 +9,14 @@ import getYear from "date-fns/getYear"
 import parseJSON from "date-fns/parseJSON"
 
 import RegionSelect from "./RegionSelect"
+import LoadingSpinner from "../uiComponents/LoadingSpinner"
 
 // import "./LoginPrompt.scss"
 
   
 const LoginPrompt = props => {
 
+    //THIS BLOCK has to do with logic that will handle user's actions
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState(false);
 
@@ -34,7 +36,6 @@ const LoginPrompt = props => {
 
     const submitRegion = event => {
 
-      console.log("submitting user region...");
       const options = {
         headers: {
           "Authorization": `Token ${localStorage.getItem("localPcaApiKey")}`
@@ -46,7 +47,6 @@ const LoginPrompt = props => {
         setSubmitted(true);
       }, (error) => {
         setSubmitError(true);
-        console.log("error happened");
         console.log(error);
       });
 
@@ -67,32 +67,20 @@ const LoginPrompt = props => {
     const code = (location.search && getWcaCode(location.search)) || "no code";
     const [wcaCode, setWcaCode] = React.useState(code);
 
-    console.log("wcaCode:" + JSON.stringify(wcaCode));
-    console.log("pcaApiKey: " + pcaApiKey);
-
     useEffect(() => {
       
-      //try retrieving PcaApiKey once, to check if user already has it
+      //try retrieving PcaApiKey from localStorage once, to check if user already has it
       setPcaApiKey(localStorage.getItem("localPcaApiKey"))
 
-      console.log("has localPcaApiKey? : " + (localStorage.getItem("localPcaApiKey") ? localStorage.getItem("localPcaApiKey") : "no"));
-
+      //try getting a PCA API key if user redirected with WCA code 
       if (localStorage.getItem("localPcaApiKey") == null) {
 
-        console.log("no localPcaApiKey - requesting from pinoycubers.org API login POST...")
         axios.post("https://cors-anywhere.herokuapp.com/https://api.pinoycubers.org/auth/login/wca/", wcaCode)
           .then(res => {
-          console.log("pinoycubers.org login POST returns: " + JSON.stringify(Object.values(res.data)));
-
             localStorage.setItem("localPcaApiKey",Object.values(res.data));
-
-            console.log("localPcaApiKey: " + localStorage.getItem("localPcaApiKey"));
-
             setPcaApiKey(localStorage.getItem("localPcaApiKey"));
-            console.log("setPcaApiKey has been set to: " + pcaApiKey);
           })
           .then().catch((error) => {
-            console.log("error response: ------");
             console.error(error.response);
           })
       }
@@ -105,8 +93,6 @@ const LoginPrompt = props => {
 
       if (localStorage.getItem("localPcaApiKey")) {
 
-        console.log("localPcaApiKey is NOT null: getting user info...");
-
         const options = {
           headers: {
             "Authorization": `Token ${localStorage.getItem("localPcaApiKey")}`
@@ -117,7 +103,6 @@ const LoginPrompt = props => {
         .then((response) => {
             setCurrentUser(response);
             checkIfCanChangeRegion(response);
-            console.log("currentUser: " + JSON.stringify(currentUser));
         }, (error) => {
           console.log(error);
         });
@@ -129,7 +114,6 @@ const LoginPrompt = props => {
 
     const checkIfCanChangeRegion = user => {
 
-
       //GET user's region-update-requests from API
       const options = {
         headers: {
@@ -137,30 +121,23 @@ const LoginPrompt = props => {
         }
       };
 
-      //error: if newly created, you don't have a REQUEST YET. it errors out
       axios.get("https://cors-anywhere.herokuapp.com/https://api.pinoycubers.org/user/region-update-requests/", options)
       .then((response) => {
-        console.log("RUR response: " + JSON.stringify(response));
-        console.log("RUR response.data: " + response.data)
-        console.log("RUR JSON.stringify response.data: " + JSON.stringify(response.data))
         setStatusOfTheUsersRequest(response.data[0]?.status);
       }, (error) => {
-        console.log("RUR error: " + JSON.stringify(error));
+        console.log(error);
       });
 
       //determining if user should be able to change region
-      console.log("checkIfCanChangeRegion is running... ");
 
       let canChange = false;
       const dateUpdated = user.data.region_updated_at ? user.data.region_updated_at : user.data.created_at;
       const yearToday = getYear(new Date());
 
-      console.log("RUR statusOfTheUsersRequest: " +statusOfTheUsersRequest);
-      if (getYear(parseJSON(dateUpdated)) !== yearToday || user.data.region == null && statusOfTheUsersRequest === undefined) {
+      if ((getYear(parseJSON(dateUpdated)) !== yearToday) || (user.data.region == null && statusOfTheUsersRequest === undefined)) {
         canChange = true;
       }
       setCanUserChangeRegion(canChange);
-
 
     };
 
@@ -185,16 +162,18 @@ const LoginPrompt = props => {
           </p>
         </React.Fragment> 
       : <React.Fragment>
-          Loading your data...
-          <span 
+          <div className="flex flex-row">
+            <LoadingSpinner /> Loading your data...
+          </div>
+        <span 
           className="underline text-sm ml-2 cursor-pointer" 
           onClick={()=>{logOut()}}
-          >Log out</span>
+        >Log out</span>
         </React.Fragment>;
 
 
     const userRegionControls = canUserChangeRegion
-      ? <div className="mt-3 flex justify-start content-end flex-wrap sm:flex-no-wrap">
+      ? <div className="mt-3 flex justify-start items-end flex-wrap sm:flex-no-wrap">
           <RegionSelect 
             regionChange={userRegionChange}
             placeholder="Select region"
@@ -258,7 +237,7 @@ const LoginPrompt = props => {
               </h3>
 
               <p className="mt-1 text-sm leading-5 text-gray-500">
-                Thanks for submitting your region! Please wait for your region setting to be approved.
+                Thanks for submitting your region! Please wait up to a week or two for your region setting to be approved.
               </p> 
             </div>
           </div>

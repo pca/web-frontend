@@ -1,8 +1,12 @@
 import React from "react"
 
+import LoadingSpinner from "../uiComponents/LoadingSpinner"
+
 const RankingList = props => {
 
-  let content = <p>Loading results...</p>;
+  let content = <div className="flex flex-row">
+                  <LoadingSpinner /> Loading results...
+                </div>;
 
   if (!props.isLoading) {
     content = (

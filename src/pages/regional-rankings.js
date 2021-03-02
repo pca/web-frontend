@@ -18,9 +18,7 @@ const RegionalRankings = () => {
   const [hideLoginPrompt, setHideLoginPrompt] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
-  const [isRegionsLoading, setIsRegionsLoading] = useState(true);
   const [rankings, setRankings] = useState(null);
-  const [regions, setRegions] = useState(null);
 
 
   //reload the rankings everytime a category changes
@@ -75,7 +73,6 @@ const RegionalRankings = () => {
           setHideLoginPrompt={setHideLoginPrompt}
         />
         <RankingNav 
-          isRegionsLoading={isRegionsLoading}
           eventChange={eventChange}
           formatChange={formatChange}
           regionChange={regionChange}

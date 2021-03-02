@@ -29,7 +29,7 @@ const RankingNav = props => {
 
 
       <RegionSelect 
-        isRankingNav={isRankingNav}
+        isRankingNav={true}
         regionChange={props.regionChange}
       />
 
