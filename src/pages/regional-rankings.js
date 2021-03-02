@@ -25,8 +25,8 @@ const RegionalRankings = () => {
 
   //reload the rankings everytime a category changes
   useEffect(() => {
-    // console.log(`https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
-    axios.get(`https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
+    // console.log(`https://thingproxy.freeboard.io/fetch/https://api.pinoycubers.org/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
+    axios.get(`https://thingproxy.freeboard.io/fetch/https://api.pinoycubers.org/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
       .then(res => {
         const rankings = res.data;
         setRankings(rankings);
@@ -72,14 +72,14 @@ const RegionalRankings = () => {
 
         <LoginPrompt 
           hideLoginPrompt={hideLoginPrompt}
-          setHideLoginPrompt={setHideLoginPrompt} 
+          setHideLoginPrompt={setHideLoginPrompt}
         />
         <RankingNav 
-          isRegionsLoading={isRegionsLoading} 
+          isRegionsLoading={isRegionsLoading}
           eventChange={eventChange}
           formatChange={formatChange}
           regionChange={regionChange}
-          setSelectedEvent={setSelectedEvent} 
+          setSelectedEvent={setSelectedEvent}
           selectedRegion={selectedRegion}
           setSelectedRegion={setSelectedRegion}
         />

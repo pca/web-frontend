@@ -21,6 +21,7 @@ const LoginPrompt = props => {
     const [currentUser, setCurrentUser] = useState(null);
     const [userRegion, setUserRegion] = useState("NCR");
     const [canUserChangeRegion, setCanUserChangeRegion] = useState(false);
+    const [statusOfTheUsersRequest, setStatusOfTheUsersRequest] = useState("Loading...");
 
     const logOut = event => {
       setPcaApiKey(null);
@@ -40,7 +41,7 @@ const LoginPrompt = props => {
         }
       };
 
-      axios.put("https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/user/region/", { region: userRegion }, options)
+      axios.post("https://thingproxy.freeboard.io/fetch/https://api.pinoycubers.org/user/region-update-requests/", { region: userRegion }, options)
       .then((response) => {
         setSubmitted(true);
       }, (error) => {
@@ -51,15 +52,6 @@ const LoginPrompt = props => {
 
     };
 
-    const checkIfCanChangeRegion = user => {
-      const canChange = false;
-      const dateChanged = user.data.region_updated_at ? user.data.region_updated_at : user.data.created_at;
-      const yearToday = getYear(new Date());
-      if (getYear(parseJSON(dateChanged)) !== yearToday) {
-        canChange = true;
-      }
-      setCanUserChangeRegion(canChange);
-    };
 
     //THIS BLOCK has to do with WCA code & PCA login key retrieval 
     const getWcaCode = (query) => {
@@ -88,7 +80,7 @@ const LoginPrompt = props => {
       if (localStorage.getItem("localPcaApiKey") == null) {
 
         console.log("no localPcaApiKey - requesting from pinoycubers.org API login POST...")
-        axios.post("https://cors-anywhere.herokuapp.com/https://pinoycubers.org/api/auth/login/wca/", wcaCode)
+        axios.post("https://cors-anywhere.herokuapp.com/https://api.pinoycubers.org/auth/login/wca/", wcaCode)
           .then(res => {
           console.log("pinoycubers.org login POST returns: " + JSON.stringify(Object.values(res.data)));
 
@@ -121,7 +113,7 @@ const LoginPrompt = props => {
           }
         };
 
-        axios.get("https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/user/", options)
+        axios.get("https://thingproxy.freeboard.io/fetch/https://api.pinoycubers.org/user/", options)
         .then((response) => {
             setCurrentUser(response);
             checkIfCanChangeRegion(response);
@@ -132,8 +124,45 @@ const LoginPrompt = props => {
 
       }
 
-    }, [pcaApiKey]);
+    }, [pcaApiKey, statusOfTheUsersRequest]);
 
+
+    const checkIfCanChangeRegion = user => {
+
+
+      //GET user's region-update-requests from API
+      const options = {
+        headers: {
+          "Authorization": `Token ${localStorage.getItem("localPcaApiKey")}`
+        }
+      };
+
+      //error: if newly created, you don't have a REQUEST YET. it errors out
+      axios.get("https://cors-anywhere.herokuapp.com/https://api.pinoycubers.org/user/region-update-requests/", options)
+      .then((response) => {
+        console.log("RUR response: " + JSON.stringify(response));
+        console.log("RUR response.data: " + response.data)
+        console.log("RUR JSON.stringify response.data: " + JSON.stringify(response.data))
+        setStatusOfTheUsersRequest(response.data[0]?.status);
+      }, (error) => {
+        console.log("RUR error: " + JSON.stringify(error));
+      });
+
+      //determining if user should be able to change region
+      console.log("checkIfCanChangeRegion is running... ");
+
+      let canChange = false;
+      const dateUpdated = user.data.region_updated_at ? user.data.region_updated_at : user.data.created_at;
+      const yearToday = getYear(new Date());
+
+      console.log("RUR statusOfTheUsersRequest: " +statusOfTheUsersRequest);
+      if (getYear(parseJSON(dateUpdated)) !== yearToday || user.data.region == null && statusOfTheUsersRequest === undefined) {
+        canChange = true;
+      }
+      setCanUserChangeRegion(canChange);
+
+
+    };
 
     const userInfo = currentUser 
       ? <React.Fragment>
@@ -148,11 +177,20 @@ const LoginPrompt = props => {
               Log out
             </span>
           </h3>
+          <p className="mt-1 mb-1 font-bold text-sm leading-5 text-gray-500">
+            Your current region: {currentUser.data.region ? currentUser.data.region : "No region yet"}
+          </p>
           <p className="mt-1 mb-3 font-bold text-sm leading-5 text-gray-500">
-            Your current region: {currentUser.data.region ? currentUser.data.region : "not yet set"}
+            Your region request's status: {statusOfTheUsersRequest ? statusOfTheUsersRequest : "No request yet"}
           </p>
         </React.Fragment> 
-      : ' ';
+      : <React.Fragment>
+          Loading your data...
+          <span 
+          className="underline text-sm ml-2 cursor-pointer" 
+          onClick={()=>{logOut()}}
+          >Log out</span>
+        </React.Fragment>;
 
 
     const userRegionControls = canUserChangeRegion
@@ -168,7 +206,25 @@ const LoginPrompt = props => {
             Set your region
           </button>
         </div>
-      : <div className="mt-3 flex justify-start content-end flex-wrap sm:flex-no-wrap">You've already set your region for this year. Wait until next year to be able to set it again.</div>;
+      : null;
+
+
+    const guideText = (statusOfTheUsersRequest === "Denied")
+      ? <React.Fragment>
+          <p className="mt-1 text-sm leading-5 text-gray-500">
+            Sorry, your request has been denied because we cannot verify your region. <br/>You must e-mail us at <strong>pcaresultscommittee@gmail.com</strong>, and make the subject of the e-mail <strong>"Region update request appeal: (Your full name)".</strong> <br/> In the e-mail, you must give us as much as you can your proof of residence / origin in your selected region.
+          </p>
+        </React.Fragment> 
+      : <React.Fragment>
+          <p className="mt-1 text-sm leading-5 text-gray-500">
+            Please keep in mind: 
+            Pick only your REAL region. Our team will verify this, and will deny your submission if found false.
+          </p> 
+          <p className="mt-1 text-sm leading-5 text-gray-500">
+            You can only set your region once every year, so please double check if it's correct before submitting.
+          </p>  
+        </React.Fragment>;
+      
 
     let content = "";
 
@@ -181,16 +237,7 @@ const LoginPrompt = props => {
 
               {userInfo}
 
-              <p className="mt-1 text-sm leading-5 text-gray-500">
-                Please keep in mind: 
-                Pick only your REAL region. Our team will verify this, and will reject your submission if found false. 
-              </p> 
-              <p className="mt-1 text-sm leading-5 text-gray-500">
-                (If you think your region setting has been rejected incorrectly, contact the nearest active Philippine WCA Delegate to you, and provide proof of residence or origin in your region.)
-              </p> 
-              <p className="mt-1 text-sm leading-5 text-gray-500">
-                You can only set your region once every year, so please check if it's correct before submitting.
-              </p>  
+              {guideText} 
 
               {userRegionControls}
 
@@ -226,11 +273,11 @@ const LoginPrompt = props => {
             <div className="ml-4 mt-4">
 
               <h3 className="text-lg leading-6 font-medium text-gray-800">
-                You've already submitted your region this year
+                Error: Can't submit region
               </h3>
 
               <p className="mt-1 text-sm leading-5 text-gray-500">
-                You can only set your region once every year.
+                A network/system error may have happened, or you may have already set your region already for this year. You can only set your region once every year.
               </p> 
             </div>
           </div>

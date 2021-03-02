@@ -19,7 +19,7 @@ const RankingNav = props => {
 
         {ListOfEventsFile.map(event => {
           return (
-            <div className="event-icon" key={event.id} onClick={()=>{props.eventChange(event.id)}}>
+            <div className="event-icon cursor-pointer" key={event.id} onClick={()=>{props.eventChange(event.id)}}>
               <img src={require("../../images/" + event.id + ".svg")} />
             </div>
           )

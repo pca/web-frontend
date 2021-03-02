@@ -12,7 +12,7 @@ const RegionSelect = props => {
     const [isRegionsLoading, setIsRegionsLoading] = useState(true);
 
     useEffect(() => {
-      axios.get(`https://thingproxy.freeboard.io/fetch/https://pinoycubers.org/api/regions`)
+      axios.get(`https://thingproxy.freeboard.io/fetch/https://api.pinoycubers.org/regions`)
         .then(res => {
           setRegions(res.data);
           setIsRegionsLoading(false);
