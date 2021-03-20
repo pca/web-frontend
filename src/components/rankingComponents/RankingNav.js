@@ -10,19 +10,29 @@ import "./RankingNav.scss"
 const RankingNav = props => {
 
   const [isRankingNav, setIsRankingNav] = useState(true);
+  
+  //sort events in the order of main/popular events first, side events last
+  let byRank = ListOfEventsFile.slice(0);
+  byRank.sort(function(a,b) {
+      return a.rank - b.rank;
+  });
 
+  console.log(ListOfEventsFile.sort);
   return (
     <div className="rankings-nav mx-4 my-5">
 
 
       <div className="events-menu mb-3">
 
-        {ListOfEventsFile.map(event => {
-          return (
-            <div className="event-icon cursor-pointer" key={event.id} onClick={()=>{props.eventChange(event.id)}}>
-              <img src={require("../../images/" + event.id + ".svg")} />
-            </div>
-          )
+        {byRank.map(event => {
+          //this condition hides events that have been removed from official competitions
+          if (event.rank < 990) {
+            return (
+              <div className="event-icon cursor-pointer" key={event.id} onClick={()=>{props.eventChange(event.id)}}>
+                <img src={require("../../images/" + event.id + ".svg")} />
+              </div>
+            )
+          }
         })} 
 
       </div>
