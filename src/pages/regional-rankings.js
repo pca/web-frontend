@@ -23,7 +23,6 @@ const RegionalRankings = () => {
 
   //reload the rankings everytime a category changes
   useEffect(() => {
-    // console.log(`https://thingproxy.freeboard.io/fetch/https://api.pinoycubers.org/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
     axios.get(`https://thingproxy.freeboard.io/fetch/https://api.pinoycubers.org/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
       .then(res => {
         const rankings = res.data;
@@ -37,20 +36,17 @@ const RegionalRankings = () => {
     setSelectedEvent(event);
     setIsLoading(true);
     setHideLoginPrompt(true);
-    console.log("new selected event: " + event);
   };
 
   const formatChange = format => {
     setSelectedFormat(format);
     setIsLoading(true);
     setHideLoginPrompt(true);
-    console.log("new selected format: " + format);
   };
 
   const regionChange = event => {
-    console.log("event.target.value region: " + event.target.value);
-    var formattedRegion = "/"
-    var nationalOrRegional = "national"
+    let formattedRegion = "/"
+    let nationalOrRegional = "national"
     if (event.target.value === "PH") {
       formattedRegion = "/"
       nationalOrRegional = "national"
@@ -61,7 +57,6 @@ const RegionalRankings = () => {
     setSelectedRegion([nationalOrRegional, formattedRegion]);
     setIsLoading(true);
     setHideLoginPrompt(true);
-    console.log("[nationalOrRegional, formattedRegion]: " + [nationalOrRegional, formattedRegion]);
   };
 
   return (

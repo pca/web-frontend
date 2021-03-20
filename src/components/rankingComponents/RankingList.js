@@ -10,7 +10,7 @@ const RankingList = props => {
 
   if (!props.isLoading) {
     content = (
-      <div>
+      <div className="px-3">
 
 
         <table className="rankings font-rubik text-sm">

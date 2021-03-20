@@ -4,8 +4,6 @@ import axios from "axios"
 
 import LoadingSpinner from "../uiComponents/LoadingSpinner"
 
-// import "./RegionSelect.scss"
-
 
 const RegionSelect = props => {
 
@@ -29,7 +27,7 @@ const RegionSelect = props => {
 
     if (!isRegionsLoading) {
       content = (
-        <div id="region-menu" className="mb-3 max-w-xs rounded-md">
+        <div id="region-menu" className={`max-w-xs rounded-md ${props.styleName ? props.styleName : ""}`}>
         
           <label htmlFor="region-menu">Region</label>
 

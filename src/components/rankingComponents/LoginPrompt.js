@@ -11,8 +11,6 @@ import parseJSON from "date-fns/parseJSON"
 import RegionSelect from "./RegionSelect"
 import LoadingSpinner from "../uiComponents/LoadingSpinner"
 
-// import "./LoginPrompt.scss"
-
   
 const LoginPrompt = props => {
 
@@ -88,7 +86,7 @@ const LoginPrompt = props => {
     }, []);
 
 
-    // once user has login key - get the user's details
+    // once the login key exists - get the user's details
     useEffect(() => {
 
       if (localStorage.getItem("localPcaApiKey")) {
@@ -128,8 +126,7 @@ const LoginPrompt = props => {
         console.log(error);
       });
 
-      //determining if user should be able to change region
-
+      //determining if user should be able to change region. first condition checks if user already updated their region this year
       let canChange = false;
       const dateUpdated = user.data.region_updated_at ? user.data.region_updated_at : user.data.created_at;
       const yearToday = getYear(new Date());
@@ -140,6 +137,7 @@ const LoginPrompt = props => {
       setCanUserChangeRegion(canChange);
 
     };
+
 
     const userInfo = currentUser 
       ? <React.Fragment>
@@ -165,21 +163,23 @@ const LoginPrompt = props => {
           <div className="flex flex-row">
             <LoadingSpinner /> Loading your data...
           </div>
-        <span 
-          className="underline text-sm ml-2 cursor-pointer" 
-          onClick={()=>{logOut()}}
-        >Log out</span>
+          <span 
+            className="underline text-sm ml-2 cursor-pointer" 
+            onClick={()=>{logOut()}}
+          >
+            Log out
+          </span>
         </React.Fragment>;
 
 
     const userRegionControls = canUserChangeRegion
-      ? <div className="mt-3 flex justify-start items-end flex-wrap sm:flex-no-wrap">
+      ? <div className="mt-3 mb-1 flex justify-start items-end flex-wrap sm:flex-no-wrap">
           <RegionSelect 
             regionChange={userRegionChange}
             placeholder="Select region"
           />
           <button 
-            className="h-10 mb-3 px-3 text-blue-100 transition-colors duration-300 bg-blue-700 rounded-md focus:shadow-outline hover:bg-blue-800 focus:bg-blue-800"
+            className="h-10 px-3 ml-2 text-white transition-colors duration-300 bg-blue rounded-md focus:shadow-outline hover:bg-blue-800 focus:bg-blue-800"
             onClick={()=>{submitRegion()}}
           >
             Set your region
@@ -197,7 +197,7 @@ const LoginPrompt = props => {
       : <React.Fragment>
           <p className="mt-1 text-sm leading-5 text-gray-500">
             Please keep in mind: 
-            Pick only your REAL region. Our team will verify this, and will deny your submission if found false.
+            Pick only your REAL region. Our team will verify this, and may deny your submission if found false.
           </p> 
           <p className="mt-1 text-sm leading-5 text-gray-500">
             You can only set your region once every year, so please double check if it's correct before submitting.
@@ -235,10 +235,10 @@ const LoginPrompt = props => {
               <h3 className="text-lg leading-6 font-medium text-gray-800">
                 You've submitted your region
               </h3>
-
               <p className="mt-1 text-sm leading-5 text-gray-500">
                 Thanks for submitting your region! Please wait up to a week or two for your region setting to be approved.
               </p> 
+
             </div>
           </div>
         </div>
@@ -254,10 +254,10 @@ const LoginPrompt = props => {
               <h3 className="text-lg leading-6 font-medium text-gray-800">
                 Error: Can't submit region
               </h3>
-
               <p className="mt-1 text-sm leading-5 text-gray-500">
-                A network/system error may have happened, or you may have already set your region already for this year. You can only set your region once every year.
-              </p> 
+                A network/system error may have happened, or your request has been denied as you may have already set your region for this year. You can only set your region once every year.
+              </p>
+
             </div>
           </div>
         </div>

@@ -29,6 +29,7 @@ const RankingNav = props => {
 
 
       <RegionSelect 
+        styleName="mb-3"
         isRankingNav={true}
         regionChange={props.regionChange}
       />
@@ -36,13 +37,13 @@ const RankingNav = props => {
 
       <div className="format-menu inline-flex" role="group" aria-label="Button group">
         <button 
-          className="h-10 px-5 text-indigo-100 transition-colors duration-300 bg-indigo-700 rounded-l-md focus:shadow-outline hover:bg-indigo-800 focus:bg-indigo-800"
+          className="h-10 px-5 text-white transition-colors duration-300 bg-blue rounded-l-md focus:shadow-outline hover:bg-indigo-800 focus:bg-indigo-800"
           onClick={()=>{props.formatChange("single")}}
         >
           Single
         </button>
         <button 
-          className="h-10 px-5 text-indigo-100 transition-colors duration-300 bg-indigo-700 rounded-r-md focus:shadow-outline hover:bg-indigo-800 focus:bg-indigo-800"
+          className="h-10 px-5 text-white transition-colors duration-300 bg-blue rounded-r-md focus:shadow-outline hover:bg-indigo-800 focus:bg-indigo-800"
           onClick={()=>{props.formatChange("average")}}
         >
           Average
