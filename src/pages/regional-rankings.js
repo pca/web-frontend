@@ -71,6 +71,7 @@ const RegionalRankings = () => {
           eventChange={eventChange}
           formatChange={formatChange}
           regionChange={regionChange}
+          selectedEvent={selectedEvent}
           setSelectedEvent={setSelectedEvent}
           selectedRegion={selectedRegion}
           setSelectedRegion={setSelectedRegion}
