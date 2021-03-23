@@ -22,13 +22,13 @@ const RankingNav = props => {
 
         <div className="format-menu inline-flex" role="group" aria-label="Button group">
           <button 
-            className="h-10 px-5 text-white transition-colors duration-300 bg-blue rounded-l-md focus:shadow-outline hover:bg-blue-dark focus:bg-blue-dark"
+            className={`h-10 px-5 text-white transition-colors duration-300 ${(props.selectedFormat === "single") ? "bg-blue-dark" : "bg-blue"} rounded-l-md focus:shadow-outline hover:bg-blue-dark`}
             onClick={()=>{props.formatChange("single")}}
           >
             Single
           </button>
           <button 
-            className="h-10 px-5 text-white transition-colors duration-300 bg-blue rounded-r-md focus:shadow-outline hover:bg-blue-dark focus:bg-blue-dark"
+            className={`h-10 px-5 text-white transition-colors duration-300 ${(props.selectedFormat === "average") ? "bg-blue-dark" : "bg-blue"} rounded-r-md focus:shadow-outline hover:bg-blue-dark focus:bg-blue-dark`}
             onClick={()=>{props.formatChange("average")}}
           >
             Average
@@ -45,14 +45,22 @@ const RankingNav = props => {
         {byRank.map(event => {
           if (event.id === "333mbf") {
             return (
-              <div className="event-icon cursor-pointer" key={event.id} onClick={()=>{props.eventChange(event.id); props.formatChange("single");}}>
+              <div 
+                className={`event-icon cursor-pointer ${(props.selectedEvent === event.id) ? "active" : ""}`} 
+                key={event.id} 
+                onClick={()=>{props.eventChange(event.id); props.formatChange("single");}}
+              >
                 <img src={require("../../images/" + event.id + ".svg")} />
               </div>
             )
           //condition: hides events that have been retired from official competitions
           } else if (event.rank < 990) {
             return (
-              <div className="event-icon cursor-pointer" key={event.id} onClick={()=>{props.eventChange(event.id)}}>
+              <div 
+                className={`event-icon cursor-pointer ${(props.selectedEvent === event.id) ? "active" : ""}`} 
+                key={event.id} 
+                onClick={()=>{props.eventChange(event.id)}}
+              >
                 <img src={require("../../images/" + event.id + ".svg")} />
               </div>
             )
