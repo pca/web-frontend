@@ -23,7 +23,7 @@ const RegionalRankings = () => {
 
   //reload the rankings everytime a category changes
   useEffect(() => {
-    axios.get(`https://thingproxy.freeboard.io/fetch/https://api.pinoycubers.org/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
+    axios.get(`https://api.pinoycubers.org/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
       .then(res => {
         const rankings = res.data;
         setRankings(rankings);

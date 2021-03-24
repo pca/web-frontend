@@ -43,7 +43,7 @@ const LoginPrompt = props => {
         }
       };
 
-      axios.post("https://thingproxy.freeboard.io/fetch/https://api.pinoycubers.org/user/region-update-requests/", { region: userRegion }, options)
+      axios.post("https://api.pinoycubers.org/user/region-update-requests/", { region: userRegion }, options)
       .then((response) => {
         setSubmitted(true);
       }, (error) => {
@@ -76,7 +76,7 @@ const LoginPrompt = props => {
       //try getting a PCA API key if user redirected with WCA code 
       if (localStorage.getItem("localPcaApiKey") == null) {
 
-        axios.post("https://cors-anywhere.herokuapp.com/https://api.pinoycubers.org/auth/login/wca/", wcaCode)
+        axios.post("https://api.pinoycubers.org/auth/login/wca/", wcaCode)
           .then(res => {
             localStorage.setItem("localPcaApiKey",Object.values(res.data));
             setPcaApiKey(localStorage.getItem("localPcaApiKey"));
@@ -100,7 +100,7 @@ const LoginPrompt = props => {
           }
         };
 
-        axios.get("https://thingproxy.freeboard.io/fetch/https://api.pinoycubers.org/user/", options)
+        axios.get("https://api.pinoycubers.org/user/", options)
         .then((response) => {
             setCurrentUser(response);
             checkIfCanChangeRegion(response);
@@ -122,7 +122,7 @@ const LoginPrompt = props => {
         }
       };
 
-      axios.get("https://cors-anywhere.herokuapp.com/https://api.pinoycubers.org/user/region-update-requests/", options)
+      axios.get("https://api.pinoycubers.org/user/region-update-requests/", options)
       .then((response) => {
         setStatusOfTheUsersRequest(response.data[0]?.status);
       }, (error) => {
