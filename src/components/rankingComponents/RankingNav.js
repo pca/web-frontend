@@ -22,13 +22,13 @@ const RankingNav = props => {
 
         <div className="format-menu inline-flex font-rubik" role="group" aria-label="Button group">
           <button 
-            className={`px-5 py-2 rounded-l-md focus:shadow-outline transition-colors duration-300 ${(props.selectedFormat === "single") ? "bg-blue-dark" : "bg-blue-light"} hover:bg-blue-dark text-sm text-white`}
+            className={`px-5 py-2 rounded-l-md focus:shadow-outline transition-colors duration-300 ${(props.selectedFormat === "single") ? "bg-blue-dark" : "bg-blue"} hover:bg-blue-dark text-sm text-white`}
             onClick={()=>{props.formatChange("single")}}
           >
             Single
           </button>
           <button 
-            className={`px-5 py-2 rounded-r-md focus:shadow-outline transition-colors duration-300 ${(props.selectedFormat === "average") ? "bg-blue-dark" : "bg-blue-light"} hover:bg-blue-dark text-sm text-white`}
+            className={`px-5 py-2 rounded-r-md focus:shadow-outline transition-colors duration-300 ${(props.selectedFormat === "average") ? "bg-blue-dark" : "bg-blue"} hover:bg-blue-dark text-sm text-white`}
             onClick={()=>{props.formatChange("average")}}
           >
             Average
