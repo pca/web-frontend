@@ -12,6 +12,8 @@ import LoginPromptContainer from "./LoginPromptContainer"
 import RegionSelect from "./RegionSelect"
 import LoadingSpinner from "../uiComponents/LoadingSpinner"
 
+import wcaLogo from "../../images/wca-logo.svg"
+
   
 const LoginPrompt = props => {
 
@@ -142,7 +144,7 @@ const LoginPrompt = props => {
 
     const userInfo = currentUser 
       ? <React.Fragment>
-          <h3 className="text-lg leading-6 font-medium text-gray-800">
+          <h3 className="text-2xl leading-6 font-medium font-effra">
             Hello, {currentUser.data.first_name ? `${currentUser.data.first_name} ` : null}
             {currentUser.data.last_name ? currentUser.data.last_name : null} 
             ({currentUser.data.wca_id ? currentUser.data.wca_id : null})!
@@ -153,10 +155,10 @@ const LoginPrompt = props => {
               Log out
             </span>
           </h3>
-          <p className="mt-1 mb-1 font-bold text-sm leading-5 text-gray-500">
+          <p className="mt-2 mb-1 font-bold text-sm leading-5">
             Your current region: {currentUser.data.region ? currentUser.data.region : "No region yet"}
           </p>
-          <p className="mt-1 mb-3 font-bold text-sm leading-5 text-gray-500">
+          <p className="mt-1 mb-3 font-bold text-sm leading-5">
             Your region request's status: {statusOfTheUsersRequest ? statusOfTheUsersRequest : "No request yet"}
           </p>
         </React.Fragment> 
@@ -191,16 +193,16 @@ const LoginPrompt = props => {
 
     const guideText = (statusOfTheUsersRequest === "Denied")
       ? <React.Fragment>
-          <p className="mt-1 text-sm leading-5 text-gray-500">
+          <p className="mt-1 text-sm leading-5">
             Sorry, your request has been denied because we cannot verify your region. <br/>You must e-mail us at <strong>pcaresultscommittee@gmail.com</strong>, and make the subject of the e-mail <strong>"Region update request appeal: (Your full name)".</strong> <br/> In the e-mail, you must give us as much as you can your proof of residence / origin in your selected region.
           </p>
         </React.Fragment> 
       : <React.Fragment>
-          <p className="mt-1 text-sm leading-5 text-gray-500">
+          <p className="mt-1 text-sm leading-5">
             Please keep in mind: 
             Pick only your REAL region. Our team will verify this, and may deny your submission if found false.
           </p> 
-          <p className="mt-1 text-sm leading-5 text-gray-500">
+          <p className="mt-1 text-sm leading-5">
             You can only set your region once every year, so please double check if it's correct before submitting.
           </p>  
         </React.Fragment>;
@@ -227,10 +229,10 @@ const LoginPrompt = props => {
       content = (
         <LoginPromptContainer>
 
-          <h3 className="text-lg leading-6 font-medium text-gray-800">
+          <h3 className="text-lg leading-6 font-medium">
             You've submitted your region
           </h3>
-          <p className="mt-1 text-sm leading-5 text-gray-500">
+          <p className="mt-1 text-sm leading-5">
             Thanks for submitting your region! Please wait up to a week or two for your region setting to be approved.
           </p> 
 
@@ -242,10 +244,10 @@ const LoginPrompt = props => {
       content = (
         <LoginPromptContainer>
 
-          <h3 className="text-lg leading-6 font-medium text-gray-800">
+          <h3 className="text-lg leading-6 font-medium">
             Error: Can't submit region
           </h3>
-          <p className="mt-1 text-sm leading-5 text-gray-500">
+          <p className="mt-1 text-sm leading-5">
             A network/system error may have happened, or your request has been denied as you may have already set your region for this year. You can only set your region once every year.
           </p>
 
@@ -262,21 +264,22 @@ const LoginPrompt = props => {
 
             <div>
               <button 
-                className="absolute top-0 -right-3 cursor-pointer text-xl"
+                className="absolute top-0 -right-3 cursor-pointer text-2xl"
                 onClick={() => props.setHideLoginPrompt(true)}>&times;
               </button>
 
-              <h3 className="text-lg leading-6 font-medium text-gray-800">
+              <h3 className="font-effra text-2xl leading-6 font-medium">
                 Want to see your regional rank here?
               </h3>
-              <p className="mt-1 text-sm leading-5 text-gray-500">
+              <p className="mt-3 text-sm leading-5">
                 If you've competed in an official WCA competition before, you can easily set your region in just a few steps.
               </p>
             </div>
 
             <div className="mt-4 flex-shrink-0">
               <span className="inline-flex rounded-md shadow-sm">
-                <a type="button" className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-gray-100 bg-yellow hover:bg-orange focus:outline-none focus:shadow-outline" href="https://www.worldcubeassociation.org/oauth/authorize/?client_id=6751d55b9b1cc5710fed3a47d9c69eca871af9b0f83ec5388a5b0cebe1f93037&redirect_uri=http://localhost:8000/regional-rankings&response_type=code&scope=">
+                <a type="button" className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md bg-yellow hover:bg-orange focus:outline-none focus:shadow-outline" href="https://www.worldcubeassociation.org/oauth/authorize/?client_id=6751d55b9b1cc5710fed3a47d9c69eca871af9b0f83ec5388a5b0cebe1f93037&redirect_uri=http://localhost:8000/regional-rankings&response_type=code&scope=">
+                  <img className="h-5 mr-2" src={require("../../images/wca-logo.svg")} />
                   Login with WCA
                 </a>
               </span>

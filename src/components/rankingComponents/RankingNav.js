@@ -20,15 +20,15 @@ const RankingNav = props => {
     ? ""
     : <React.Fragment>
 
-        <div className="format-menu inline-flex" role="group" aria-label="Button group">
+        <div className="format-menu inline-flex font-rubik" role="group" aria-label="Button group">
           <button 
-            className={`h-10 px-5 text-white transition-colors duration-300 ${(props.selectedFormat === "single") ? "bg-blue-dark" : "bg-blue"} rounded-l-md focus:shadow-outline hover:bg-blue-dark`}
+            className={`px-5 py-2 rounded-l-md focus:shadow-outline transition-colors duration-300 ${(props.selectedFormat === "single") ? "bg-blue-dark" : "bg-blue-light"} hover:bg-blue-dark text-sm text-white`}
             onClick={()=>{props.formatChange("single")}}
           >
             Single
           </button>
           <button 
-            className={`h-10 px-5 text-white transition-colors duration-300 ${(props.selectedFormat === "average") ? "bg-blue-dark" : "bg-blue"} rounded-r-md focus:shadow-outline hover:bg-blue-dark focus:bg-blue-dark`}
+            className={`px-5 py-2 rounded-r-md focus:shadow-outline transition-colors duration-300 ${(props.selectedFormat === "average") ? "bg-blue-dark" : "bg-blue-light"} hover:bg-blue-dark text-sm text-white`}
             onClick={()=>{props.formatChange("average")}}
           >
             Average
@@ -39,14 +39,14 @@ const RankingNav = props => {
 
 
   return (
-    <div className="rankings-nav mx-4 my-5">
+    <div className="rankings-nav mx-4 my-5 font-rubik">
 
-      <div className="events-menu mb-3">
+      <div className="events-menu flex flex-row flex-wrap">
         {byRank.map(event => {
           if (event.id === "333mbf") {
             return (
               <div 
-                className={`event-icon cursor-pointer ${(props.selectedEvent === event.id) ? "active" : ""}`} 
+                className={`event-icon mb-1 cursor-pointer ${(props.selectedEvent === event.id) ? "active" : ""}`} 
                 key={event.id} 
                 onClick={()=>{props.eventChange(event.id); props.formatChange("single");}}
               >
@@ -57,7 +57,7 @@ const RankingNav = props => {
           } else if (event.rank < 990) {
             return (
               <div 
-                className={`event-icon cursor-pointer ${(props.selectedEvent === event.id) ? "active" : ""}`} 
+                className={`event-icon mb-1 cursor-pointer ${(props.selectedEvent === event.id) ? "active" : ""}`} 
                 key={event.id} 
                 onClick={()=>{props.eventChange(event.id)}}
               >

@@ -7,13 +7,17 @@ module.exports = {
         yellow: "#FFD329",
         blue: {
           DEFAULT: "#468FCC",
+          light: "#92B9DA",
           dark: "#0A4C84",
         },
         red: "#EF4438",
         dark: "#222222",
         light: "#F8F8F8",
         text: "#303030",
-        gray: "#EEEEEE",
+        gray: {
+          DEFAULT: "#EEEEEE",
+          dark: "#666666",
+        },
       },
       fontFamily: {
         effra: "Effra, sans-serif",
