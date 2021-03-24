@@ -1,13 +1,6 @@
 $link-yellow: #e6a103;
 $link-yellow-hover: #e6a103;
 
-.events-menu {
-  display: flex;
-  flex-direction: row;
-
-
-}
-
 .event-icon {
   height: 28px;
   width: 28px;
@@ -26,12 +19,30 @@ $link-yellow-hover: #e6a103;
   }
 }
 
+.rankings-container {
+  width: 100%;
+  padding-bottom: 120px;
+  overflow-x: scroll;
+}
 
-table.rankings {
+.table-responsive {
+  width: auto;
+}
+
+table.rankings-list {
 
   white-space: nowrap;
   
-  tr:nth-of-type(odd) {
+  thead tr {
+    border-bottom: 2px solid #ddd;
+    background-color: #fff;
+  }
+
+  tr {
+    border-bottom: 1px solid #ddd;
+  }
+
+  tbody tr:nth-of-type(odd) {
     background-color: #e9e9e9;
   }
 
