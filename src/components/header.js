@@ -5,9 +5,9 @@ import React from "react"
 import Image from "../components/image"
 
 const Header = ({ siteTitle }) => (
-  <header className="bg-yellow">
-    <div className="mx-auto max-w-1140 bg-light">
-      <div className="flex items-center justify-between p-4 mx-auto bg-light font-effraMd max-w-1140">
+  <header className="">
+    <div className="mx-auto bg-light">
+      <div className="flex items-center justify-between p-4 mx-auto bg-light font-effraMd">
         <div className="flex items-center">
           <div className="mr-3 w-14">
             <Link to="/">
@@ -22,6 +22,7 @@ const Header = ({ siteTitle }) => (
         </div>
 
         <div>
+          {/*
           <ul className="flex tracking-wider text-subtitle text-dark">
             <li className="mr-6 ">
               <Link to="/">Home</Link>
@@ -42,6 +43,7 @@ const Header = ({ siteTitle }) => (
               <Link to="/organize">Organize</Link>
             </li>
           </ul>
+          */}
         </div>
       </div>
     </div>

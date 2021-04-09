@@ -62,26 +62,28 @@ const RegionalRankings = () => {
   return (
     <div>
       <Layout>
+        <div className="max-w-1340 mx-auto">
 
-        <LoginPrompt 
-          hideLoginPrompt={hideLoginPrompt}
-          setHideLoginPrompt={setHideLoginPrompt}
-        />
-        <RankingNav 
-          eventChange={eventChange}
-          formatChange={formatChange}
-          regionChange={regionChange}
-          selectedEvent={selectedEvent}
-          setSelectedEvent={setSelectedEvent}
-          selectedFormat={selectedFormat}
-          selectedRegion={selectedRegion}
-          setSelectedRegion={setSelectedRegion}
-        />
-        <RankingList 
-          isLoading={isLoading} 
-          rankings={rankings} 
-        />
+          <LoginPrompt 
+            hideLoginPrompt={hideLoginPrompt}
+            setHideLoginPrompt={setHideLoginPrompt}
+          />
+          <RankingNav 
+            eventChange={eventChange}
+            formatChange={formatChange}
+            regionChange={regionChange}
+            selectedEvent={selectedEvent}
+            setSelectedEvent={setSelectedEvent}
+            selectedFormat={selectedFormat}
+            selectedRegion={selectedRegion}
+            setSelectedRegion={setSelectedRegion}
+          />
+          <RankingList 
+            isLoading={isLoading} 
+            rankings={rankings} 
+          />
 
+        </div>
       </Layout>
     </div>
   )

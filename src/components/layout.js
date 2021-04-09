@@ -35,7 +35,7 @@ const Layout = ({ children }) => {
       <div>
         <main>{children}</main>
         <footer className="my-6">
-          <div className="flex justify-between mx-auto max-w-1140">
+          <div className="flex justify-between mx-auto px-5">
             <p className="text-subtitle font-effraMd">Made by PCA</p>
             <div>
               <a href="https://www.facebook.com/groups/PINOYCUBERS">
