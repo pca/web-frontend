@@ -278,7 +278,7 @@ const LoginPrompt = props => {
 
             <div className="mt-4 flex-shrink-0">
               <span className="inline-flex rounded-md shadow-sm">
-                <a type="button" className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md bg-yellow hover:bg-orange focus:outline-none focus:shadow-outline" href="https://www.worldcubeassociation.org/oauth/authorize/?client_id=6751d55b9b1cc5710fed3a47d9c69eca871af9b0f83ec5388a5b0cebe1f93037&redirect_uri=http://localhost:8000/regional-rankings&response_type=code&scope=">
+                <a type="button" className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md bg-yellow hover:bg-orange focus:outline-none focus:shadow-outline" href="https://www.worldcubeassociation.org/oauth/authorize/?client_id=6751d55b9b1cc5710fed3a47d9c69eca871af9b0f83ec5388a5b0cebe1f93037&redirect_uri=https://dev.pinoycubers.org/regional-rankings&response_type=code&scope=">
                   <img className="h-5 mr-2" src={require("../../images/wca-logo.svg")} />
                   Login with WCA
                 </a>
