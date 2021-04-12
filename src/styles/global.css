@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+	font-family: "Effra";
+	src: url("../fonts/Effra_Std_Rg.ttf");
+}
+@font-face {
+	font-family: "Effra Medium";
+	src: url("../fonts/Effra_Std_Md.ttf");
+}
+

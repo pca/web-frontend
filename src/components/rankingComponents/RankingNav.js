@@ -20,7 +20,7 @@ const RankingNav = props => {
     ? ""
     : <React.Fragment>
 
-        <div className="format-menu inline-flex font-rubik" role="group" aria-label="Button group">
+        <div className="format-menu inline-flex font-effra" role="group" aria-label="Button group">
           <button 
             className={`px-5 py-2 rounded-l-md focus:shadow-outline transition-colors duration-300 ${(props.selectedFormat === "single") ? "bg-blue-dark" : "bg-blue"} hover:bg-blue-dark text-sm text-white`}
             onClick={()=>{props.formatChange("single")}}
@@ -39,7 +39,7 @@ const RankingNav = props => {
 
 
   return (
-    <div className="rankings-nav mx-4 my-5 font-rubik">
+    <div className="rankings-nav mx-4 my-5 font-effra">
 
       <div className="events-menu flex flex-row flex-wrap">
         {byRank.map(event => {
