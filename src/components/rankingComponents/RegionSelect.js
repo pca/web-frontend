@@ -42,7 +42,7 @@ const RegionSelect = props => {
               return (
                 <option
                   key={region.id}
-                  value={region.id} 
+                  value={region.id}
                 >
                   {region.name}
                 </option>
