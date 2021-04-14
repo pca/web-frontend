@@ -32,8 +32,8 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <div>
-        <main>{children}</main>
+      <div className="flex-grow flex flex-col justify-between">
+        <main className="mb-auto">{children}</main>
         <footer className="my-6">
           <div className="flex justify-between mx-auto px-5">
             <p className="font-effraMd">Made by PCA</p>

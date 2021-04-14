@@ -60,7 +60,7 @@ const RegionalRankings = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col justify-between">
       <Layout>
         <div className="max-w-1340 mx-auto">
 
