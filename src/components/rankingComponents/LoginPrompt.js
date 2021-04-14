@@ -233,7 +233,7 @@ const LoginPrompt = props => {
             You've submitted your region
           </h3>
           <p className="mt-1 text-sm leading-5">
-            Thanks for submitting your region! Please wait up to a week or two for your region setting to be approved.
+            Thanks for submitting your region! Please wait up to a week or so for your region setting to be approved. Feel free to visit this page again to check your submission's status.
           </p> 
 
         </LoginPromptContainer>

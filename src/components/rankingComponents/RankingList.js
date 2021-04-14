@@ -14,7 +14,7 @@ const RankingList = props => {
       <div className="rankings-container px-3 md:px-0">
         <div className="table-responsive">
 
-          <table className="rankings-list font-effra text-sm">
+          <table className="rankings-list font-rubik text-sm">
 
             <thead className="font-bold text-left">
               <tr>
