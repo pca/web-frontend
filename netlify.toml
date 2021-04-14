@@ -1,0 +1,5 @@
+[[redirects]]
+from = "/"
+to = "/regional-rankings"
+status = 302
+force = false
