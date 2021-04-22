@@ -9,6 +9,7 @@ import RankingNav from "../components/rankingComponents/RankingNav"
 import RankingList from "../components/rankingComponents/RankingList"
 
 import "@fontsource/rubik"
+import { PCA_API_URL } from "../constants"
 
 const RegionalRankings = () => {
 
@@ -23,7 +24,7 @@ const RegionalRankings = () => {
 
   //reload the rankings everytime a category changes
   useEffect(() => {
-    axios.get(`https://api.pinoycubers.org/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
+    axios.get(`${PCA_API_URL}/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
       .then(res => {
         const rankings = res.data;
         setRankings(rankings);

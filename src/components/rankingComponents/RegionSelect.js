@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 
 import LoadingSpinner from "../uiComponents/LoadingSpinner"
+import { PCA_API_URL } from "../../constants";
 
 
 const RegionSelect = props => {
@@ -12,7 +13,7 @@ const RegionSelect = props => {
     const [isRegionsLoading, setIsRegionsLoading] = useState(true);
 
     useEffect(() => {
-      axios.get(`https://api.pinoycubers.org/regions`)
+      axios.get(`${PCA_API_URL}/regions`)
         .then(res => {
           setRegions(res.data);
           setIsRegionsLoading(false);

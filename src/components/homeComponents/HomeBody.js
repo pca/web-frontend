@@ -5,6 +5,7 @@ import Layout from "../layout"
 import SEO from "../seo"
 import EventCard from "./EventCard"
 import NewsCard from "./NewsCard"
+import { PCA_FACEBOOK_URL } from "../../constants"
 
 const HomeBody = () => (
   <section className="bg-light py-70">
@@ -81,7 +82,7 @@ const HomeBody = () => (
 
         {/* More News Button */}
         <a
-          href="https://www.facebook.com/groups/PINOYCUBERS"
+          href={PCA_FACEBOOK_URL}
           target="_blank"
           className="col-start-10 col-span-full"
         >

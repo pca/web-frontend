@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 
 import SEO from "../seo"
+import { PCA_FACEBOOK_URL } from "../../constants"
 
 const HomeHeader = () => (
   <section className="bg-yellow py-70">
@@ -65,7 +66,7 @@ const HomeHeader = () => (
             commodo nulla felis cursus nam eget fringilla suspendisse.
           </p>
           <a
-            href="https://www.facebook.com/groups/PINOYCUBERS"
+            href={PCA_FACEBOOK_URL}
             target="_blank"
             className="px-10 py-2 font-effraMd text-subtitle text-dark bg-blue"
           >
