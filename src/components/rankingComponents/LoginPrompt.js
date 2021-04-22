@@ -85,7 +85,7 @@ const LoginPrompt = props => {
     setPcaApiKey(localStorage.getItem("localPcaApiKey"))
 
     //try getting a PCA API key if user redirected with WCA code
-    if (localStorage.getItem("localPcaApiKey") == null) {
+    if (localStorage.getItem("localPcaApiKey") == null && wcaCode) {
       axios
         .post(`${PCA_API_URL}/auth/login/wca/`, wcaCode)
         .then(res => {
