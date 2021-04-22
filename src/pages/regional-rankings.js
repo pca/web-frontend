@@ -11,39 +11,38 @@ import RankingList from "../components/rankingComponents/RankingList"
 import "@fontsource/rubik"
 import { PCA_API_URL } from "../constants"
 
-const RegionalRankings = () => {
+const RegionalRankings = ({ location }) => {
+  const [selectedEvent, setSelectedEvent] = useState("333")
+  const [selectedFormat, setSelectedFormat] = useState("single")
+  const [selectedRegion, setSelectedRegion] = useState(["national", "/"])
+  const [hideLoginPrompt, setHideLoginPrompt] = useState(false)
 
-  const [selectedEvent, setSelectedEvent] = useState("333");
-  const [selectedFormat, setSelectedFormat] = useState("single");
-  const [selectedRegion, setSelectedRegion] = useState(['national', '/']); 
-  const [hideLoginPrompt, setHideLoginPrompt] = useState(false);
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [rankings, setRankings] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(true)
+  const [rankings, setRankings] = useState(null)
 
   //reload the rankings everytime a category changes
   useEffect(() => {
-    axios.get(`${PCA_API_URL}/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`)
+    setIsLoading(true)
+    axios
+      .get(
+        `${PCA_API_URL}/rankings/${selectedRegion[0]}-${selectedFormat}${selectedRegion[1]}${selectedEvent}`
+      )
       .then(res => {
-        const rankings = res.data;
-        setRankings(rankings);
-        setIsLoading(false);
+        const rankings = res.data
+        setRankings(rankings)
+        setIsLoading(false)
       })
-  }, [selectedEvent, selectedFormat, selectedRegion]);
-
+  }, [selectedEvent, selectedFormat, selectedRegion])
 
   const eventChange = event => {
-    setSelectedEvent(event);
-    setIsLoading(true);
-    setHideLoginPrompt(true);
-  };
+    setSelectedEvent(event)
+    setHideLoginPrompt(true)
+  }
 
   const formatChange = format => {
-    setSelectedFormat(format);
-    setIsLoading(true);
-    setHideLoginPrompt(true);
-  };
+    setSelectedFormat(format)
+    setHideLoginPrompt(true)
+  }
 
   const regionChange = event => {
     let formattedRegion = "/"
@@ -55,21 +54,20 @@ const RegionalRankings = () => {
       formattedRegion = "/" + event.target.value + "/"
       nationalOrRegional = "regional"
     }
-    setSelectedRegion([nationalOrRegional, formattedRegion]);
-    setIsLoading(true);
-    setHideLoginPrompt(true);
-  };
+    setSelectedRegion([nationalOrRegional, formattedRegion])
+    setHideLoginPrompt(true)
+  }
 
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <Layout>
         <div className="max-w-1340 mx-auto">
-
-          <LoginPrompt 
+          <LoginPrompt
             hideLoginPrompt={hideLoginPrompt}
             setHideLoginPrompt={setHideLoginPrompt}
+            location={location}
           />
-          <RankingNav 
+          <RankingNav
             eventChange={eventChange}
             formatChange={formatChange}
             regionChange={regionChange}
@@ -79,16 +77,11 @@ const RegionalRankings = () => {
             selectedRegion={selectedRegion}
             setSelectedRegion={setSelectedRegion}
           />
-          <RankingList 
-            isLoading={isLoading} 
-            rankings={rankings} 
-          />
-
+          <RankingList isLoading={isLoading} rankings={rankings} />
         </div>
       </Layout>
     </div>
   )
-
 }
 
 export default RegionalRankings

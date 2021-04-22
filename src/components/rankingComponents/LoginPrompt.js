@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 
 import axios from "axios"
 
-import { useLocation } from "@reach/router"
 import queryString from "query-string"
 
 import getYear from "date-fns/getYear"
@@ -77,7 +76,7 @@ const LoginPrompt = props => {
 
   const [pcaApiKey, setPcaApiKey] = useState(null)
 
-  const location = useLocation()
+  const { location } = props
   const code = (location.search && getWcaCode(location.search)) || "no code"
   const [wcaCode, setWcaCode] = React.useState(code)
 
