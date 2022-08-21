@@ -31,7 +31,7 @@ const RankingList = props => {
               {props.rankings.map((cuber, i) => {
                 return (
                   <tr key={cuber.wca_id}>
-                    <td className="pos px-3 py-1 text-gray-600">{i + 1}</td>
+                    <td className="pos px-3 py-1 text-blue-600">{i + 1}</td>
                     <td className="name px-3 py-1 text-gray-600">{cuber.person_name}</td>
                     <td className="result px-3 py-1 font-black text-gray-600"> {cuber.value}</td>
                     <td className="competition px-3 py-1 text-gray-600">{cuber.competition.name}</td>
