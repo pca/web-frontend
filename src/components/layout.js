@@ -17,6 +17,7 @@ import {
 
 import Header from "./header"
 import "./layout.css"
+import { PCA_FACEBOOK_URL } from "../constants"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -38,7 +39,7 @@ const Layout = ({ children }) => {
           <div className="flex justify-between mx-auto px-5">
             <p className="font-effraMd">Made by PCA</p>
             <div>
-              <a href="https://www.facebook.com/groups/PINOYCUBERS">
+              <a href={PCA_FACEBOOK_URL}>
                 <FontAwesomeIcon
                   icon={faFacebook}
                   size="lg"

@@ -2,6 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 
 import SEO from "../seo"
+import { PCA_FACEBOOK_URL } from "../../constants"
 
 const HomeExplore = () => (
   <section className="bg-yellow py-70">
@@ -35,7 +36,7 @@ const HomeExplore = () => (
         </Link>
 
         <a
-          href="https://www.facebook.com/groups/PINOYCUBERS"
+          href={PCA_FACEBOOK_URL}
           className="flex justify-between col-span-6 p-8 bg-light font-effra"
         >
           <div className="flex flex-col justify-center w-72">
