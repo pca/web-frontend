@@ -24,6 +24,7 @@ const LoginPrompt = props => {
     const [currentUser, setCurrentUser] = useState(null);
     const [userRegion, setUserRegion] = useState("NCR");
     const [canUserChangeRegion, setCanUserChangeRegion] = useState(false);
+    const [userHasWcaId, setUserHasWcaId] = useState(false);
     const [statusOfTheUsersRequest, setStatusOfTheUsersRequest] = useState("Loading...");
 
     const logOut = event => {
@@ -48,7 +49,6 @@ const LoginPrompt = props => {
         setSubmitted(true);
       }, (error) => {
         setSubmitError(true);
-        console.log(error);
       });
 
     };
@@ -105,7 +105,6 @@ const LoginPrompt = props => {
             setCurrentUser(response);
             checkIfCanChangeRegion(response);
         }, (error) => {
-          console.log(error);
         });
 
       }
@@ -131,13 +130,18 @@ const LoginPrompt = props => {
 
       //determining if user should be able to change region. first condition checks if user already updated their region this year
       let canChange = false;
+      let hasWcaId = false;
       const dateUpdated = user.data.region_updated_at ? user.data.region_updated_at : user.data.created_at;
       const yearToday = getYear(new Date());
 
       if ((getYear(parseJSON(dateUpdated)) !== yearToday) || (user.data.region == null && statusOfTheUsersRequest === undefined)) {
         canChange = true;
       }
+      if (user.data.wca_id != null) {
+        hasWcaId = true;
+      }
       setCanUserChangeRegion(canChange);
+      setUserHasWcaId(hasWcaId);
 
     };
 
@@ -182,13 +186,24 @@ const LoginPrompt = props => {
             placeholder="Select region"
           />
           <button 
-            className="h-10 px-3 ml-2 text-white transition-colors duration-300 bg-blue rounded-md focus:shadow-outline hover:bg-blue-800 focus:bg-blue-800"
+            className="h-10 px-3 ml-2 text-blue transition-colors duration-300 underline bg-light rounded-md focus:shadow-outline hover:text-blue-dark focus:text-blue-dark"
             onClick={()=>{submitRegion()}}
           >
-            Set your region
+            Submit your personal region
           </button>
         </div>
       : null;
+
+
+    const noWcaIdMessage = userHasWcaId
+
+      ? null 
+      : <React.Fragment>
+          <p className="mt-1 text-sm leading-5">
+            <strong> Oops! <br/>You don't have a WCA ID connected to your WCA account yet. </strong> <br/> For new cubers: To get a WCA ID, you must have finished competing in at least one WCA competition. 
+          </p>
+        </React.Fragment>;
+
 
 
     const guideText = (statusOfTheUsersRequest === "Denied")
