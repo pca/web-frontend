@@ -31,6 +31,9 @@ const LoginPrompt = props => {
   useEffect(() => {
     if (typeof window !== `undefined`) {
       setOrigin(window.location.origin)
+
+      console.log("${origin}")
+      console.log(origin)
     }
   }, [])
 
@@ -92,6 +95,7 @@ const LoginPrompt = props => {
         .then(res => {
           localStorage.setItem("localPcaApiKey", Object.values(res.data))
           setPcaApiKey(localStorage.getItem("localPcaApiKey"))
+          console.log("res:")
           console.log(res)
         })
         .then()
@@ -305,9 +309,8 @@ const LoginPrompt = props => {
             <h3 className="font-effra text-2xl leading-6 font-medium">
               Want to see your regional rank here?
             </h3>
-            <p className="mt-3 text-sm leading-5">
-              If you've competed in an official WCA competition before, you can
-              easily set your region in just a few steps.
+            <p className="mt-3 text-md leading-5">
+              If you've competed in an official WCA competition before, you can easily set your region in just a few steps.
             </p>
           </div>
 
