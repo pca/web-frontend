@@ -127,6 +127,7 @@ const LoginPrompt = props => {
   }, [pcaApiKey, statusOfTheUsersRequest])
 
   const checkIfCanChangeRegion = user => {
+
     //GET user's region-update-requests from API
     const options = {
       headers: {
@@ -149,7 +150,10 @@ const LoginPrompt = props => {
     const dateUpdated = user.data.region_updated_at ? user.data.region_updated_at : user.data.created_at;
     const yearToday = getYear(new Date());
 
-    if ((getYear(parseJSON(dateUpdated)) !== yearToday) || (user.data.region == null && statusOfTheUsersRequest === undefined)) {
+    console.log("user.data:")
+    console.log(user.data)
+
+    if (((getYear(parseJSON(dateUpdated)) !== yearToday) && (user.data.wca_id != null)) || (user.data.region == null && statusOfTheUsersRequest === undefined && user.data.wca_id != null)) {
       canChange = true;
     }
     if (user.data.wca_id != null) {
@@ -203,6 +207,7 @@ const LoginPrompt = props => {
 
   const userRegionControls = canUserChangeRegion ? (
     <div className="mt-3 mb-1 flex justify-start items-end flex-wrap sm:flex-no-wrap">
+      What region are you from in the Philippines?
       <RegionSelect
         regionChange={userRegionChange}
         placeholder="Select region"
@@ -213,7 +218,7 @@ const LoginPrompt = props => {
           submitRegion()
         }}
       >
-        Set your region
+        Submit your region
       </button>
     </div>
   ) : null
@@ -223,7 +228,7 @@ const LoginPrompt = props => {
     ? null 
     : <React.Fragment>
         <p className="mt-1 text-sm leading-5">
-          <strong> Oops! <br/>You don't have a WCA ID connected to your WCA account yet. </strong> <br/> For new cubers: To get a WCA ID, you must have finished competing in at least one WCA competition. 
+          <strong> Oops! <br/>You don't have a WCA ID connected to your WCA account yet. </strong> <br/> To get a WCA ID, you must have finished competing in at least one WCA competition. 
         </p>
       </React.Fragment>;
 
