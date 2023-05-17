@@ -147,6 +147,8 @@ const LoginPrompt = props => {
     //determining if user should be able to change region. first condition checks if user already updated their region this year
     let canChange = false;
     let hasWcaId = false;
+    let userAlreadySetRegion = false;
+
     const dateUpdated = user.data.region_updated_at ? user.data.region_updated_at : user.data.created_at;
     const yearToday = getYear(new Date());
 
@@ -159,9 +161,13 @@ const LoginPrompt = props => {
     if (user.data.wca_id != null) {
       hasWcaId = true;
     }
+    if (user.data.region_updated_at != null) {
+      userAlreadySetRegion = true;
+    }
 
     setCanUserChangeRegion(canChange);
     setUserHasWcaId(hasWcaId);
+    props.setHideLoginPrompt(userAlreadySetRegion);
   }
 
   const userInfo = currentUser ? (
@@ -263,7 +269,10 @@ const LoginPrompt = props => {
 
   if (pcaApiKey != null && !submitted) {
     content = (
-      <LoginPromptContainer>
+      <LoginPromptContainer 
+        hideLoginPrompt={props.hideLoginPrompt}
+        setHideLoginPrompt={props.setHideLoginPrompt}
+      >
         {userInfo}
 
         {guideText}
@@ -273,7 +282,10 @@ const LoginPrompt = props => {
     )
   } else if (submitted) {
     content = (
-      <LoginPromptContainer>
+      <LoginPromptContainer
+        hideLoginPrompt={props.hideLoginPrompt}
+        setHideLoginPrompt={props.setHideLoginPrompt}
+      >
         <h3 className="text-lg leading-6 font-medium">
           You've submitted your region
         </h3>
@@ -286,57 +298,59 @@ const LoginPrompt = props => {
     )
   } else if (submitError && !submitted) {
     content = (
-      <LoginPromptContainer>
+      <LoginPromptContainer
+        hideLoginPrompt={props.hideLoginPrompt}
+        setHideLoginPrompt={props.setHideLoginPrompt}
+      >
         <h3 className="text-lg leading-6 font-medium">
           Error: Can't submit region
         </h3>
         <p className="mt-1 text-sm leading-5">
-          A network/system error may have happened, or your request has been
-          denied as you may have already set your region for this year. You can
-          only set your region once every year.
+          Your request has been denied as you may have already set your region for this year. 
+          You can only set your region once every year.
+          A network/system error may have happened, please let us know on our e-mail at <strong>pcadevteam@gmail.com</strong>.
         </p>
       </LoginPromptContainer>
     )
   } else {
-    if (props.hideLoginPrompt) {
-      content = ""
-    } else {
-      content = (
-        <LoginPromptContainer>
-          <div>
-            <button
-              className="absolute top-0 -right-3 cursor-pointer text-2xl"
-              onClick={() => props.setHideLoginPrompt(true)}
+    content = (
+      <LoginPromptContainer
+        hideLoginPrompt={props.hideLoginPrompt}
+        setHideLoginPrompt={props.setHideLoginPrompt}
+      >
+        <div>
+          <button
+            className="absolute top-0 -right-3 cursor-pointer text-2xl"
+            onClick={() => props.setHideLoginPrompt(true)}
+          >
+            &times; 
+          </button>
+
+          <h3 className="font-effra text-2xl leading-6 font-medium">
+            Want to see your regional rank here?
+          </h3>
+          <p className="mt-3 text-sm leading-5">
+            If you've competed in an official WCA competition before, you can easily set your region in just a few steps.
+          </p>
+        </div>
+
+        <div className="mt-4 flex-shrink-0">
+          <span className="inline-flex rounded-md shadow-sm">
+            <a
+              type="button"
+              className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md bg-yellow hover:bg-orange focus:outline-none focus:shadow-outline"
+              href={`https://www.worldcubeassociation.org/oauth/authorize/?client_id=6751d55b9b1cc5710fed3a47d9c69eca871af9b0f83ec5388a5b0cebe1f93037&redirect_uri=${origin}/regional-rankings&response_type=code&scope=`}
             >
-              &times;
-            </button>
-
-            <h3 className="font-effra text-2xl leading-6 font-medium">
-              Want to see your regional rank here?
-            </h3>
-            <p className="mt-3 text-md leading-5">
-              If you've competed in an official WCA competition before, you can easily set your region in just a few steps.
-            </p>
-          </div>
-
-          <div className="mt-4 flex-shrink-0">
-            <span className="inline-flex rounded-md shadow-sm">
-              <a
-                type="button"
-                className="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md bg-yellow hover:bg-orange focus:outline-none focus:shadow-outline"
-                href={`https://www.worldcubeassociation.org/oauth/authorize/?client_id=6751d55b9b1cc5710fed3a47d9c69eca871af9b0f83ec5388a5b0cebe1f93037&redirect_uri=${origin}/regional-rankings&response_type=code&scope=`}
-              >
-                <img
-                  className="h-5 mr-2"
-                  src={require("../../images/wca-logo.svg")}
-                />
-                Login with WCA
-              </a>
-            </span>
-          </div>
-        </LoginPromptContainer>
-      )
-    }
+              <img
+                className="h-5 mr-2"
+                src={require("../../images/wca-logo.svg")}
+              />
+              Login with WCA
+            </a>
+          </span>
+        </div>
+      </LoginPromptContainer>
+    )
   }
 
   return content
