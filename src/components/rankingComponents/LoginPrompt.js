@@ -149,19 +149,19 @@ const LoginPrompt = props => {
     let hasWcaId = false;
     let userAlreadySetRegion = false;
 
-    const dateUpdated = user.data.region_updated_at ? user.data.region_updated_at : user.data.created_at;
+    const dateUpdated = user.data.region_updated_at ? user.data.region_updated_at : null;
     const yearToday = getYear(new Date());
 
     console.log("user.data:")
     console.log(user.data)
 
-    if (((getYear(parseJSON(dateUpdated)) !== yearToday) && (user.data.wca_id != null)) || (user.data.region == null && statusOfTheUsersRequest === undefined && user.data.wca_id != null)) {
+    if (((getYear(parseJSON(dateUpdated)) !== yearToday) && (user.data.region != null)) || (user.data.region == null && statusOfTheUsersRequest === undefined && user.data.wca_id != null)) {
       canChange = true;
     }
     if (user.data.wca_id != null) {
       hasWcaId = true;
     }
-    if (user.data.region_updated_at != null) {
+    if (user.data.region != null) {
       userAlreadySetRegion = true;
     }
 
@@ -278,6 +278,8 @@ const LoginPrompt = props => {
         {guideText}
 
         {userRegionControls}
+
+        {noWcaIdMessage}
       </LoginPromptContainer>
     )
   } else if (submitted) {
@@ -319,12 +321,6 @@ const LoginPrompt = props => {
         setHideLoginPrompt={props.setHideLoginPrompt}
       >
         <div>
-          <button
-            className="absolute top-0 -right-3 cursor-pointer text-2xl"
-            onClick={() => props.setHideLoginPrompt(true)}
-          >
-            &times; 
-          </button>
 
           <h3 className="font-effra text-2xl leading-6 font-medium">
             Want to see your regional rank here?
