@@ -213,9 +213,9 @@ const LoginPrompt = props => {
 
   const userRegionControls = canUserChangeRegion ? (
     <div className="mt-3 mb-1 flex justify-start items-end flex-wrap sm:flex-no-wrap">
-      What region are you from in the Philippines?
       <RegionSelect
         regionChange={userRegionChange}
+        labelText="What region are you from in the Philippines?"
         placeholder="Select region"
       />
       <button
@@ -321,7 +321,6 @@ const LoginPrompt = props => {
         setHideLoginPrompt={props.setHideLoginPrompt}
       >
         <div>
-
           <h3 className="font-effra text-2xl leading-6 font-medium">
             Want to see your regional rank here?
           </h3>
