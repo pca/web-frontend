@@ -30,7 +30,7 @@ const RegionSelect = props => {
       content = (
         <div id="region-menu" className={`max-w-xs rounded-md ${props.styleName ? props.styleName : ""}`}>
         
-          <label htmlFor="region-menu" className="text-sm">Region</label>
+          <label htmlFor="region-menu" className="text-sm">{props.labelText}</label>
 
           <select 
             className="block form-select w-full rounded-md transition border border-gray-300 px-3 py-2 bg-white duration-150 ease-in-out text-sm sm:leading-5 text-gray-600"
