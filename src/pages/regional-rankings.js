@@ -79,6 +79,11 @@ const RegionalRankings = ({ location }) => {
           />
           <RankingList isLoading={isLoading} rankings={rankings} />
         </div>
+
+
+        <p className="mt-3 text-sm leading-5 mx-5">
+          See anything wrong? Any incorrect rankings? let us know at <strong>pcadevteam@gmail.com</strong>.
+        </p>
       </Layout>
     </div>
   )
