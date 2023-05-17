@@ -71,6 +71,7 @@ const RankingNav = props => {
       <RegionSelect 
         styleName="mb-3"
         isRankingNav={true}
+        labelText="Region"
         regionChange={props.regionChange}
       />
 
