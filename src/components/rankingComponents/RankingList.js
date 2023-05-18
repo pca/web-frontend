@@ -4,7 +4,7 @@ import LoadingSpinner from "../uiComponents/LoadingSpinner"
 
 const RankingList = props => {
 
-  let content = <div className="flex flex-row">
+  let content = <div className="flex flex-row mx-5">
                   <LoadingSpinner /> Loading results...
                 </div>;
 
