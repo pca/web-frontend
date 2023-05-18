@@ -164,6 +164,9 @@ const LoginPrompt = props => {
     if (user.data.region != null) {
       userAlreadySetRegion = true;
     }
+    if ((statusOfTheUsersRequest === "Pending") || (statusOfTheUsersRequest === "Denied")) {
+      canChange = false;
+    }
 
     setCanUserChangeRegion(canChange);
     setUserHasWcaId(hasWcaId);
@@ -197,7 +200,7 @@ const LoginPrompt = props => {
     </React.Fragment>
   ) : (
     <React.Fragment>
-      <div className="flex flex-row">
+      <div className="flex flex-row mx-5">
         <LoadingSpinner /> Loading your data...
       </div>
       <span
@@ -248,19 +251,24 @@ const LoginPrompt = props => {
           You must e-mail us at <strong>pcadevteam@gmail.com</strong>,
           and make the subject of the e-mail{" "}
           <strong>"Region update request appeal: (Your full name)".</strong>{" "}
-          <br /> In the e-mail, you must give us as much as you can your proof
-          of residence / origin in your selected region.
+          <br /> In the e-mail, you must give us as much as you can your proof of residence / origin in your selected region.
+        </p>
+      </React.Fragment>
+    ) : statusOfTheUsersRequest === "Pending" ? (
+      <React.Fragment>
+        <p className="mt-1 text-sm leading-5">
+          You've already submitted a request. For now, you can only wait for your request to be processed.<br />
+          You may e-mail us at <strong>pcadevteam@gmail.com</strong>,
+          for any concerns.{" "}
         </p>
       </React.Fragment>
     ) : (
       <React.Fragment>
         <p className="mt-1 text-sm leading-5">
-          Please keep in mind: Pick only your REAL region. Our team will verify
-          this, and may deny your submission if found false.
+          Please keep in mind: Pick only your REAL region. Our team will verify this, and may deny your submission if found false.
         </p>
         <p className="mt-1 text-sm leading-5">
-          You can only set your region once every year, so please double check
-          if it's correct before submitting.
+          You can only set your region once every year, so please double check if it's correct before submitting.
         </p>
       </React.Fragment>
     )
