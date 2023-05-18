@@ -22,7 +22,7 @@ const RegionSelect = props => {
 
     const PhOption = props.isRankingNav ? <option key="PH" value="PH">Philippines</option> : ' ';
 
-    let content = <div className="flex flex-row">
+    let content = <div className="flex flex-row mx-5">
                     <LoadingSpinner /> Loading regions...
                   </div>;
 
