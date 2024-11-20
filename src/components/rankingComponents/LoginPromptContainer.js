@@ -13,7 +13,7 @@ const LoginPromptContainer = ({ hideLoginPrompt, setHideLoginPrompt, children })
         className="relative inline-flex items-center px-4 py-2 mx-4 mt-5 border-2 border-yellow text-sm leading-5 font-medium cursor-pointer rounded-md bg-transparent hover:bg-orange focus:outline-none focus:shadow-outline"
         onClick={() => setHideLoginPrompt(false)}
       >
-         ⚙️&nbsp; Show your regional settings
+        <span role="img" aria-label="waving hand">👋</span>&nbsp; Show your regional settings
       </button>
     )
   } else {

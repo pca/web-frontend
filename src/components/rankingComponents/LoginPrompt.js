@@ -11,29 +11,67 @@ import LoginPromptContainer from "./LoginPromptContainer"
 import RegionSelect from "./RegionSelect"
 import LoadingSpinner from "../uiComponents/LoadingSpinner"
 
-import wcaLogo from "../../images/wca-logo.svg"
 import { PCA_API_URL } from "../../constants"
 
 const LoginPrompt = props => {
-  //THIS BLOCK has to do with logic that will handle user's actions
+  const { setHideLoginPrompt } = props
   const [submitted, setSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState(false)
   const [origin, setOrigin] = useState("/")
-
   const [currentUser, setCurrentUser] = useState(null)
   const [userRegion, setUserRegion] = useState("NCR")
   const [canUserChangeRegion, setCanUserChangeRegion] = useState(false)
-  const [userHasWcaId, setUserHasWcaId] = useState(false);
-  const [statusOfTheUsersRequest, setStatusOfTheUsersRequest] = useState(
-    "Loading..."
-  )
+  const [userHasWcaId, setUserHasWcaId] = useState(false)
+  const [statusOfTheUsersRequest, setStatusOfTheUsersRequest] = useState("Loading...")
+  const [pcaApiKey, setPcaApiKey] = useState(null)
+
+  const checkIfCanChangeRegion = React.useCallback((user) => {
+    const options = {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("localPcaApiKey")}`,
+      },
+    }
+
+    axios.get(`${PCA_API_URL}/user/region-update-requests/`, options).then(
+      response => {
+        setStatusOfTheUsersRequest(response.data[0]?.status)
+      },
+      error => {
+        console.log(error)
+      }
+    )
+
+    let canChange = false
+    let hasWcaId = false
+    let userAlreadySetRegion = false
+
+    const dateUpdated = user.data.region_updated_at ? user.data.region_updated_at : null
+    const yearToday = getYear(new Date())
+
+    if (((getYear(parseJSON(dateUpdated)) !== yearToday) && (user.data.region != null)) || 
+        (user.data.region == null && statusOfTheUsersRequest === undefined && user.data.wca_id != null)) {
+      canChange = true
+    }
+    if (user.data.wca_id != null) {
+      hasWcaId = true
+    }
+    if (user.data.region != null) {
+      userAlreadySetRegion = true
+    }
+    if ((statusOfTheUsersRequest === "Pending") || (statusOfTheUsersRequest === "Denied")) {
+      canChange = false
+    }
+
+    setCanUserChangeRegion(canChange)
+    setUserHasWcaId(hasWcaId)
+    setHideLoginPrompt(userAlreadySetRegion)
+  }, [statusOfTheUsersRequest, setHideLoginPrompt])
 
   useEffect(() => {
     if (typeof window !== `undefined`) {
-      setOrigin(window.location.origin)
-
-      console.log("${origin}")
-      console.log(origin)
+      const windowOrigin = window.location.origin
+      setOrigin(windowOrigin)
+      console.log(windowOrigin)
     }
   }, [])
 
@@ -78,11 +116,9 @@ const LoginPrompt = props => {
     }
   }
 
-  const [pcaApiKey, setPcaApiKey] = useState(null)
-
   const { location } = props
   const code = (location.search && getWcaCode(location.search)) || "no code"
-  const [wcaCode, setWcaCode] = React.useState(code)
+  const [wcaCode] = React.useState(code)
 
   useEffect(() => {
     //try retrieving PcaApiKey from localStorage once, to check if user already has it
@@ -103,7 +139,7 @@ const LoginPrompt = props => {
           console.error(error.response)
         })
     }
-  }, [])
+  }, [wcaCode, origin])
 
   // once the login key exists - get the user's details
   useEffect(() => {
@@ -124,54 +160,7 @@ const LoginPrompt = props => {
         }
       )
     }
-  }, [pcaApiKey, statusOfTheUsersRequest])
-
-  const checkIfCanChangeRegion = user => {
-
-    //GET user's region-update-requests from API
-    const options = {
-      headers: {
-        Authorization: `Token ${localStorage.getItem("localPcaApiKey")}`,
-      },
-    }
-
-    axios.get(`${PCA_API_URL}/user/region-update-requests/`, options).then(
-      response => {
-        setStatusOfTheUsersRequest(response.data[0]?.status)
-      },
-      error => {
-        console.log(error)
-      }
-    )
-
-    //determining if user should be able to change region. first condition checks if user already updated their region this year
-    let canChange = false;
-    let hasWcaId = false;
-    let userAlreadySetRegion = false;
-
-    const dateUpdated = user.data.region_updated_at ? user.data.region_updated_at : null;
-    const yearToday = getYear(new Date());
-
-    console.log("user.data:")
-    console.log(user.data)
-
-    if (((getYear(parseJSON(dateUpdated)) !== yearToday) && (user.data.region != null)) || (user.data.region == null && statusOfTheUsersRequest === undefined && user.data.wca_id != null)) {
-      canChange = true;
-    }
-    if (user.data.wca_id != null) {
-      hasWcaId = true;
-    }
-    if (user.data.region != null) {
-      userAlreadySetRegion = true;
-    }
-    if ((statusOfTheUsersRequest === "Pending") || (statusOfTheUsersRequest === "Denied")) {
-      canChange = false;
-    }
-
-    setCanUserChangeRegion(canChange);
-    setUserHasWcaId(hasWcaId);
-    props.setHideLoginPrompt(userAlreadySetRegion);
-  }
+  }, [pcaApiKey, statusOfTheUsersRequest, checkIfCanChangeRegion])
 
   const userInfo = currentUser ? (
     <React.Fragment>
@@ -181,9 +170,14 @@ const LoginPrompt = props => {
         {currentUser.data.last_name ? currentUser.data.last_name : null}(
         {currentUser.data.wca_id ? currentUser.data.wca_id : null})!
         <span
+          role="button"
+          tabIndex={0}
           className="underline text-sm ml-2 cursor-pointer"
-          onClick={() => {
-            logOut()
+          onClick={() => logOut()}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              logOut()
+            }
           }}
         >
           Log out
@@ -204,9 +198,14 @@ const LoginPrompt = props => {
         <LoadingSpinner /> Loading your data...
       </div>
       <span
+        role="button"
+        tabIndex={0}
         className="underline text-sm ml-2 cursor-pointer"
-        onClick={() => {
-          logOut()
+        onClick={() => logOut()}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            logOut()
+          }
         }}
       >
         Log out
@@ -345,6 +344,7 @@ const LoginPrompt = props => {
               href={`https://www.worldcubeassociation.org/oauth/authorize/?client_id=6751d55b9b1cc5710fed3a47d9c69eca871af9b0f83ec5388a5b0cebe1f93037&redirect_uri=${origin}/regional-rankings&response_type=code&scope=`}
             >
               <img
+                alt="WCA Logo"
                 className="h-5 mr-2"
                 src={require("../../images/wca-logo.svg")}
               />

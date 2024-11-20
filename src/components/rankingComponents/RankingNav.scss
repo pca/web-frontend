@@ -23,10 +23,13 @@ $link-yellow-hover: #e6a103;
   width: 100%;
   padding-bottom: 120px;
   overflow-x: auto;
+  min-height: 400px;
+  transition: all 0.3s ease;
 }
 
 .table-responsive {
-  width: auto;
+  width: 100%;
+  transition: all 0.3s ease;
 }
 
 table.rankings-list {

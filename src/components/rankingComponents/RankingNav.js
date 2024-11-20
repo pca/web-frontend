@@ -46,25 +46,50 @@ const RankingNav = props => {
           if (event.id === "333mbf") {
             return (
               <div 
+                role="button"
+                tabIndex={0}
                 className={`event-icon mb-1 cursor-pointer ${(props.selectedEvent === event.id) ? "active" : ""}`} 
                 key={event.id} 
-                onClick={()=>{props.eventChange(event.id); props.formatChange("single");}}
+                onClick={() => {
+                  props.eventChange(event.id);
+                  props.formatChange("single");
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    props.eventChange(event.id);
+                    props.formatChange("single");
+                  }
+                }}
               >
-                <img src={require("../../images/" + event.id + ".svg")} />
-              </div>
-            )
-          //condition: hides events that have been retired from official competitions
-          } else if (event.rank < 990) {
-            return (
-              <div 
-                className={`event-icon mb-1 cursor-pointer ${(props.selectedEvent === event.id) ? "active" : ""}`} 
-                key={event.id} 
-                onClick={()=>{props.eventChange(event.id)}}
-              >
-                <img src={require("../../images/" + event.id + ".svg")} />
+                <img 
+                  src={require("../../images/" + event.id + ".svg")} 
+                  alt={`${event.name} icon`}
+                />
               </div>
             )
           }
+          if (event.rank < 990) {
+            return (
+              <div 
+                role="button"
+                tabIndex={0}
+                className={`event-icon mb-1 cursor-pointer ${(props.selectedEvent === event.id) ? "active" : ""}`} 
+                key={event.id} 
+                onClick={() => props.eventChange(event.id)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    props.eventChange(event.id);
+                  }
+                }}
+              >
+                <img 
+                  src={require("../../images/" + event.id + ".svg")} 
+                  alt={`${event.name} icon`}
+                />
+              </div>
+            )
+          }
+          return null
         })} 
       </div>
 

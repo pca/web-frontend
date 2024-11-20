@@ -36,30 +36,35 @@ const Layout = ({ children }) => {
       <div className="flex-grow flex flex-col justify-between">
         <main className="mb-auto">{children}</main>
         <footer className="my-6">
-          <div className="flex justify-between mx-auto px-5">
-            <p className="font-effraMd">Made by PCA</p>
-            <div>
-              <a href={PCA_FACEBOOK_URL}>
-                <FontAwesomeIcon
-                  icon={faFacebook}
-                  size="lg"
-                  className="mr-3 text-text"
-                />
-              </a>
-              <a href="#">
-                <FontAwesomeIcon
-                  icon={faYoutube}
-                  size="lg"
-                  className="mr-3 text-text"
-                />
-              </a>
-              <a href="#">
-                <FontAwesomeIcon
-                  icon={faInstagram}
-                  size="lg"
-                  className="text-text"
-                />
-              </a>
+          <div className="flex flex-col gap-3">
+            <p className="text-sm leading-5 mx-5">
+              See anything wrong? Any incorrect rankings? let us know at <strong>pcadevteam@gmail.com</strong>.
+            </p>
+            <div className="flex justify-between mx-auto px-5 w-full">
+              <p className="font-effraMd">Made with <span role="img" aria-label="heart">❤️</span> by PCA</p>
+              <div>
+                <a href={PCA_FACEBOOK_URL}>
+                  <FontAwesomeIcon
+                    icon={faFacebook}
+                    size="lg"
+                    className="mr-3 text-text"
+                  />
+                </a>
+                <button type="button">
+                  <FontAwesomeIcon
+                    icon={faYoutube}
+                    size="lg"
+                    className="mr-3 text-text"
+                  />
+                </button>
+                <button type="button">
+                  <FontAwesomeIcon
+                    icon={faInstagram}
+                    size="lg"
+                    className="text-text"
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </footer>
