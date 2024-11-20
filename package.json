@@ -1,13 +1,13 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "ph-cubers",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "A web application by the Philippine Cubers Association (PCA) that provides an easy way to view and track World Cube Association (WCA) competition rankings",
   "version": "0.1.0",
   "engines": {
     "node": ">=16.0.0 <17.0.0",
     "npm": ">=8.0.0"
   },
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Philippine Cubers Association",
   "dependencies": {
     "@fontsource/rubik": "^4.2.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -37,10 +37,17 @@
     "tailwindcss": "^2.0.1"
   },
   "devDependencies": {
+    "core-js": "^3.2.3",
+    "core-js-pure": "^3.23.3",
     "prettier": "2.1.2"
   },
   "keywords": [
-    "gatsby"
+    "gatsby",
+    "speedcubing",
+    "wca",
+    "rankings",
+    "philippines",
+    "cubing"
   ],
   "license": "0BSD",
   "scripts": {
@@ -54,10 +61,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+    "url": "https://github.com/pca/web-frontend"
   },
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/pca/web-frontend/issues"
   },
   "resolutions": {
     "postcss": "^8.4.0",
