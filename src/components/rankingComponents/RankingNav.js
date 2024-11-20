@@ -6,9 +6,7 @@ import RegionSelect from "./RegionSelect"
 
 import "./RankingNav.scss"
 
-
 const RankingNav = props => {
-  
   //sort events in the order of main/popular events first, side events last
   let byRank = ListOfEventsFile.slice(0);
   byRank.sort(function(a,b) {
@@ -19,7 +17,6 @@ const RankingNav = props => {
   const formatSelector = (props.selectedEvent === "333mbf")
     ? ""
     : <React.Fragment>
-
         <div className="format-menu inline-flex font-rubik" role="group" aria-label="Button group">
           <button 
             className={`px-5 py-2 rounded-l-md focus:shadow-outline transition-colors duration-300 ${(props.selectedFormat === "single") ? "bg-blue-dark" : "bg-blue"} hover:bg-blue-dark text-sm text-white`}
@@ -34,13 +31,10 @@ const RankingNav = props => {
             Average
           </button>
         </div>
-
       </React.Fragment>;
-
 
   return (
     <div className="rankings-nav mx-4 my-5 font-rubik">
-
       <div className="events-menu flex flex-row flex-wrap">
         {byRank.map(event => {
           if (event.id === "333mbf") {
@@ -62,7 +56,7 @@ const RankingNav = props => {
                 }}
               >
                 <img 
-                  src={require("../../images/" + event.id + ".svg")} 
+                  src={`/images/${event.id}.svg`}
                   alt={`${event.name} icon`}
                 />
               </div>
@@ -83,7 +77,7 @@ const RankingNav = props => {
                 }}
               >
                 <img 
-                  src={require("../../images/" + event.id + ".svg")} 
+                  src={`/images/${event.id}.svg`}
                   alt={`${event.name} icon`}
                 />
               </div>
@@ -101,7 +95,6 @@ const RankingNav = props => {
       />
 
       {formatSelector}
-
     </div>
   )
 }

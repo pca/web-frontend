@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
-import Image from "gatsby-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { useStaticQuery, graphql } from "gatsby"
 
 const Header = ({ siteTitle }) => {
@@ -9,30 +9,36 @@ const Header = ({ siteTitle }) => {
     query {
       logo: file(relativePath: { eq: "pca-logo.png" }) {
         childImageSharp {
-          fluid(maxWidth: 300) {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(
+            width: 56,
+            height: 62,
+            layout: FIXED,
+            placeholder: BLURRED,
+            formats: [AUTO, WEBP]
+          )
         }
       }
     }
   `)
+
+  const logoImage = getImage(data.logo)
 
   return (
     <header className="">
       <div className="mx-auto bg-light">
         <div className="flex items-center justify-between p-4 mx-auto bg-light font-effraMd">
           <div className="flex items-center">
-            <div className="mr-3 w-14">
+            <div className="mr-3 w-14 h-14 flex items-center justify-center">
               <Link to="/">
-                {data.logo?.childImageSharp?.fluid ? (
-                  <Image
-                    fluid={data.logo.childImageSharp.fluid}
+                {logoImage ? (
+                  <GatsbyImage
+                    image={logoImage}
                     alt="PCA Logo"
                     loading="eager"
                     fadeIn={false}
                   />
                 ) : (
-                  <div style={{ width: '56px', height: '56px' }} />
+                  <div className="w-14 h-14 bg-light" />
                 )}
               </Link>
             </div>

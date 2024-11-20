@@ -346,7 +346,7 @@ const LoginPrompt = props => {
               <img
                 alt="WCA Logo"
                 className="h-5 mr-2"
-                src={require("../../images/wca-logo.svg")}
+                src="/images/wca-logo.svg"
               />
               Login with WCA
             </a>
