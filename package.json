@@ -60,6 +60,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "resolutions": {
-    "postcss": "^8.4.0"
+    "postcss": "^8.4.0",
+    "core-js-pure": "^3.23.3"
   }
 }
