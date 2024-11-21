@@ -22,8 +22,8 @@ A web application by the Philippine Cubers Association (PCA) that provides an ea
 
 ### Prerequisites
 
-- Node.js (version 16.x)
-- npm (version 8.x or higher)
+- Node.js (version 20.x)
+- npm (version 10.x)
 
 ### Installation
 
